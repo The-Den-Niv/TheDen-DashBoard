@@ -56,7 +56,7 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
-         .chart-container {
+        .chart-container {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(12px) saturate(180%);
             border-radius: 15px;
@@ -68,20 +68,28 @@
             position: relative;
         }
 
-        .button-container {
-            margin-top: 1.5rem;
+        .button-wrapper {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px) saturate(180%);
+            border-radius: 15px;
+            margin: 1rem auto;
+            padding: 1rem;
+            max-width: 800px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
             text-align: center;
         }
 
-        .add-data-btn {
+       .add-data-btn {
             background: rgba(255, 255, 255, 0.1);
             color: #e0e0e0;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 0.5rem 1.5rem;
+            padding: 0.75rem 2rem;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 1rem;
+            margin: 0 auto;
         }
 
         .add-data-btn:hover {
@@ -133,10 +141,12 @@
 
     <div class="chart-container">
         <canvas id="balanceChart"></canvas>
-        <div class="button-container">
-            <button class="add-data-btn" onclick="showModal()">Add Data +</button>
         </div>
 
+         <div class="button-wrapper">
+        <button class="add-data-btn" onclick="showModal()">Add Data +</button>
+    </div>
+        
     <div id="modal" class="modal">
         <div class="modal-content">
             <h2>Add New Data</h2>
