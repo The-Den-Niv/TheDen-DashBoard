@@ -3,69 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Den</title>
+    <title>The Den - Crew Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
-        <button class="nav-button" onclick="toggleMenu()">☰</button>
-        <div class="dropdown-menu" id="dropdownMenu">
+        <div class="nav-btn" onclick="toggleNav()">☰</div>
+        <h1 class="logo">The Den</h1>
+        <button class="admin-btn" onclick="toggleLogin()">Admin</button>
+        <div class="nav-dropdown">
             <a href="#">Home</a>
             <a href="#">Crew</a>
             <a href="#">Finances</a>
             <a href="#">Settings</a>
         </div>
-        <h1 class="title">The Den</h1>
     </header>
 
-<main>
-    <div class="dashboard-grid">
-        <!-- Financial Section -->
-        <div class="dashboard-card wide">
-            <div class="chart-container">
-                <canvas id="balanceChart"></canvas>
-                <button class="add-data" onclick="addData()">Add Deposit ($)</button>
-            </div>
-        </div>
-
-        <!-- Crew Level Section -->
-        <div class="dashboard-card">
-            <div class="crew-level">
-                <h2>Crew Level</h2>
-                <p class="level">85</p>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 75%"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Crew Members Section -->
-        <div class="dashboard-card wide">
-            <div class="crew-members">
-                <h3>Crew Members</h3>
-                <div class="members-grid">
-                    <div class="member">
-                        <div class="profile-pic"></div>
-                        <h4>Viper</h4>
-                        <p>Strategist</p>
-                    </div>
-                    <div class="member">
-                        <div class="profile-pic"></div>
-                        <h4>Raven</h4>
-                        <p>Quartermaster</p>
-                    </div>
-                    <div class="member">
-                        <div class="profile-pic"></div>
-                        <h4>Ghost</h4>
-                        <p>Security</p>
-                    </div>
-                </div>
-            </div>
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <h2>Admin Login</h2>
+            <input type="text" placeholder="Username" id="username">
+            <input type="password" placeholder="Password" id="password">
+            <button onclick="login()">Login</button>
         </div>
     </div>
-</main>
+
+    <main>
+        <div class="chart-container">
+            <canvas id="balanceChart"></canvas>
+            <button class="add-data-btn" id="addDataBtn" onclick="showDataForm()" style="display: none;">Add Data</button>
+        </div>
+
+        <div class="crew-level">
+            <h2>Crew Level</h2>
+            <div class="level-display">85</div>
+        </div>
+
+        <div class="crew-members">
+            <div class="member-card">
+                <div class="profile-img"></div>
+                <h3>Crew Member 1</h3>
+            </div>
+            <div class="member-card">
+                <div class="profile-img"></div>
+                <h3>Crew Member 2</h3>
+            </div>
+            <div class="member-card">
+                <div class="profile-img"></div>
+                <h3>Crew Member 3</h3>
+            </div>
+        </div>
+    </main>
 
     <script src="script.js"></script>
 </body>
