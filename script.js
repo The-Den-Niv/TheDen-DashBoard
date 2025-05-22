@@ -37,8 +37,25 @@ const chart = new Chart(ctx, {
 // Navigation toggle
 function toggleNav() {
     const nav = document.querySelector('.nav-dropdown');
-    nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+    if (nav.style.display === 'block') {
+        nav.style.display = 'none';
+    } else {
+        // Close any other open dropdowns
+        document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
+            dropdown.style.display = 'none';
+        });
+        nav.style.display = 'block';
+    }
 }
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+    if (!event.target.closest('.nav-btn') && !event.target.closest('.nav-dropdown')) {
+        document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
+            dropdown.style.display = 'none';
+        });
+    }
+});
 
 // Admin login
 let isAdmin = false;
