@@ -18,9 +18,9 @@ const chart = new Chart(ctx, {
             }
         }]
     },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
+  options: {
+    responsive: true,
+    maintainAspectRatio: false, // Add this
         scales: {
             y: {
                 grid: { color: 'rgba(192,192,192,0.1)' },
