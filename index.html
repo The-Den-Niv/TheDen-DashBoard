@@ -20,26 +20,52 @@
         <h1 class="title">The Den</h1>
     </header>
 
-    <main>
-        <div class="chart-container">
-            <canvas id="balanceChart"></canvas>
-            <button class="add-data" onclick="addData()">Add Deposit</button>
-        </div>
-
-        <div class="crew-level">
-            <h2>Crew Level</h2>
-            <p class="level">85</p>
-        </div>
-
-        <div class="crew-members">
-            <div class="member">
-                <div class="profile-pic"></div>
-                <h3>Member 1</h3>
-                <p>Role</p>
+<main>
+    <div class="dashboard-grid">
+        <!-- Financial Section -->
+        <div class="dashboard-card wide">
+            <div class="chart-container">
+                <canvas id="balanceChart"></canvas>
+                <button class="add-data" onclick="addData()">Add Deposit ($)</button>
             </div>
-            <!-- Add more member divs as needed -->
         </div>
-    </main>
+
+        <!-- Crew Level Section -->
+        <div class="dashboard-card">
+            <div class="crew-level">
+                <h2>Crew Level</h2>
+                <p class="level">85</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 75%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crew Members Section -->
+        <div class="dashboard-card wide">
+            <div class="crew-members">
+                <h3>Crew Members</h3>
+                <div class="members-grid">
+                    <div class="member">
+                        <div class="profile-pic"></div>
+                        <h4>Viper</h4>
+                        <p>Strategist</p>
+                    </div>
+                    <div class="member">
+                        <div class="profile-pic"></div>
+                        <h4>Raven</h4>
+                        <p>Quartermaster</p>
+                    </div>
+                    <div class="member">
+                        <div class="profile-pic"></div>
+                        <h4>Ghost</h4>
+                        <p>Security</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 
     <script src="script.js"></script>
 </body>
