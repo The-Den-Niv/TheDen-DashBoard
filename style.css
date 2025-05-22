@@ -1,96 +1,155 @@
 :root {
-    --primary-color: #2a2a2a;
-    --accent-color: #00ff9d;
-    --text-color: #ffffff;
+    --primary-color: #0a0a0a;
+    --accent-1: #c0c0c0;
+    --accent-2: #2a2a2a;
+    --text-color: #e0e0e0;
+    --gradient: linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 100%);
 }
 
 body {
     margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: var(--primary-color);
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--gradient);
     color: var(--text-color);
+    min-height: 100vh;
 }
 
 header {
     position: relative;
-    padding: 1rem;
-    background-color: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    background: linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 #site-title {
     position: absolute;
     top: 15px;
-    left: 20px;
+    left: 30px;
     font-family: 'UnifrakturMaguntia', cursive;
-    font-size: 3.5rem;
-    color: var(--accent-color);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7),
-                 0 0 10px rgba(0, 255, 157, 0.5);
-    letter-spacing: 2px;
-    margin: 0;
+    font-size: 4rem;
+    background: linear-gradient(45deg, #e0e0e0, #909090);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
     transition: all 0.3s ease;
 }
 
 #site-title:hover {
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9),
-                 0 0 15px rgba(0, 255, 157, 0.7);
-    transform: scale(1.02);
+    text-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
 }
 
-.nav-container {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
-
+/* Sleek Navigation Button */
 #nav-button {
-    background: none;
-    border: 2px solid var(--accent-color);
-    color: var(--accent-color);
-    padding: 10px;
-    font-size: 1.5rem;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--accent-1);
+    padding: 12px 18px;
+    font-size: 1.2rem;
     cursor: pointer;
-    border-radius: 5px;
-    transition: all 0.3s;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3),
+               -2px -2px 4px rgba(255, 255, 255, 0.05);
 }
 
 #nav-button:hover {
-    background-color: var(--accent-color);
-    color: var(--primary-color);
+    background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4),
+               -3px -3px 6px rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+    color: #fff;
 }
 
+/* Glow Effect Class */
+.glow-on-hover {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.glow-on-hover:hover {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.glow-on-hover::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.2);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.glow-on-hover:hover::after {
+    opacity: 1;
+}
+
+/* Updated Dropdown Menu */
 .dropdown-content {
     display: none;
     position: absolute;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.9);
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    min-width: 200px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 0;
 }
 
 .dropdown-content a {
     color: var(--text-color);
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    transition: all 0.3s;
+    padding: 1rem 1.5rem;
+    margin: 0.25rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
 }
 
 .dropdown-content a:hover {
-    background-color: var(--accent-color);
-    color: var(--primary-color);
+    background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+    transform: translateX(5px);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.show { display: block; }
-
+/* Sleeker Admin Panel */
 #admin-panel {
-    margin: 2rem;
+    margin: 3rem auto;
     padding: 2rem;
-    border: 2px solid var(--accent-color);
-    border-radius: 10px;
-    display: none;
+    max-width: 600px;
+    background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-.hidden { display: none; }
+#data-upload {
+    background: #2a2a2a;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 1rem 0;
+}
+
+button {
+    background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+    background: linear-gradient(145deg, #4a4a4a, #3a3a3a);
+    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+}
