@@ -1,1 +1,0 @@
-const ADMIN_PASSWORD = '7Z96%@Tf/8W';
