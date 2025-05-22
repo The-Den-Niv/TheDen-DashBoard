@@ -3,16 +3,36 @@ const ctx = document.getElementById('balanceChart').getContext('2d');
 const chart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+        labels: [],
         datasets: [{
             label: 'Crew Balance ($)',
-            data: [5000, 6200, 7500, 8200, 9000],
+            data: [],
             borderColor: '#c0c0c0',
-            tension: 0.4
+            borderWidth: 2,
+            pointBackgroundColor: '#2b2b2b',
+            pointBorderColor: '#c0c0c0',
+            tension: 0.4,
+            fill: {
+                target: 'origin',
+                above: 'rgba(192,192,192,0.1)'
+            }
         }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                grid: { color: 'rgba(192,192,192,0.1)' },
+                ticks: { color: '#c0c0c0' }
+            },
+            x: {
+                grid: { color: 'rgba(192,192,192,0.1)' },
+                ticks: { color: '#c0c0c0' }
+            }
+        }
     }
 });
-
 // Navigation toggle
 function toggleNav() {
     const nav = document.querySelector('.nav-dropdown');
