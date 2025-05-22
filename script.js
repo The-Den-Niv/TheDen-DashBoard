@@ -43,10 +43,26 @@ function toggleNav() {
 // Admin login
 let isAdmin = false;
 
+// Toggle login modal
 function toggleLogin() {
     const modal = document.getElementById('loginModal');
-    modal.style.display = 'flex';
+    modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
 }
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('loginModal');
+    if(event.target === modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Close modal with ESC key
+document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape') {
+        document.getElementById('loginModal').style.display = 'none';
+    }
+});
 
 function login() {
     const username = document.getElementById('username').value;
@@ -77,24 +93,3 @@ window.onclick = function(event) {
         modal.style.display = 'none';
     }
 }
-
-// Toggle login modal
-function toggleLogin() {
-    const modal = document.getElementById('loginModal');
-    modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
-}
-
-// Close modal when clicking outside
-window.onclick = function(event) {
-    const modal = document.getElementById('loginModal');
-    if(event.target === modal) {
-        modal.style.display = 'none';
-    }
-}
-
-// Close modal with ESC key
-document.addEventListener('keydown', (e) => {
-    if(e.key === 'Escape') {
-        document.getElementById('loginModal').style.display = 'none';
-    }
-});
