@@ -144,7 +144,7 @@ main {
 /* Admin Button */
 .admin-btn {
     position: absolute;
-    right: 1.5rem;
+    right: 4.5rem; /* Changed from 1.5rem */
     top: 50%;
     transform: translateY(-50%);
     background: rgba(255,255,255,0.05);
