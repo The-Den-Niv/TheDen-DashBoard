@@ -59,20 +59,34 @@ header {
 .chart-container {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
-    padding: 2rem;
-    margin: 100px auto 20px;
-    width: 80%;
+    padding: 1rem;
+    margin: 100px 0 20px 20px; /* Top Right Bottom Left */
+    width: 60%;
+    max-width: 800px;
     backdrop-filter: blur(5px);
+    float: left;
+}
+
+#balanceChart {
+    height: 300px !important;
+    width: 100% !important;
 }
 
 .crew-level {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     padding: 1rem;
-    margin: 20px auto;
+    margin: 100px 20px 20px 0;
     width: 200px;
     text-align: center;
     backdrop-filter: blur(5px);
+    float: right;
+}
+
+main::after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
 .crew-members {
