@@ -3,253 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Den - Crew Balance</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>The Den</title>
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #1a1a1a;
-            color: #e0e0e0;
-            font-family: 'Arial', sans-serif;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-            padding: 1rem;
-            position: relative;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-        }
-
-        .nav-button {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-        }
-
-        .nav-button span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background: #e0e0e0;
-            margin: 4px 0;
-        }
-
-        .title {
-            font-family: 'UnifrakturMaguntia', cursive;
-            font-size: 2.5rem;
-            color: #f0f0f0;
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .chart-container {
-            background: rgba(16, 16, 16, 0.9);
-            border-radius: 4px;
-            margin: 2rem auto;
-            padding: 20px;
-            max-width: 800px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-        }
-
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .time-period-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .period-btn {
-            background: rgba(255, 255, 255, 0.08);
-            color: #e0e0e0;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.2s ease;
-        }
-
-        .period-btn.active {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .chart-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .add-data-btn {
-            background: rgba(255, 255, 255, 0.08);
-            color: #e0e0e0;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.2s ease;
-        }
-
-        .add-data-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="header">
-        <div class="nav-button">
-            <span></span>
-            <span></span>
-            <span></span>
+    <header>
+        <button class="nav-button" onclick="toggleMenu()">☰</button>
+        <div class="dropdown-menu" id="dropdownMenu">
+            <a href="#">Home</a>
+            <a href="#">Crew</a>
+            <a href="#">Finances</a>
+            <a href="#">Settings</a>
         </div>
         <h1 class="title">The Den</h1>
     </header>
 
-    <div class="chart-container">
-        <div class="chart-header">
-            <div class="time-period-buttons">
-                <button class="period-btn active" onclick="updateTimePeriod('24h')">24H</button>
-                <button class="period-btn" onclick="updateTimePeriod('7d')">7D</button>
-                <button class="period-btn" onclick="updateTimePeriod('1m')">1M</button>
-                <button class="period-btn" onclick="updateTimePeriod('lifetime')">ALL</button>
-            </div>
-            <div class="chart-actions">
-                <button class="add-data-btn" onclick="showModal()">Add Data Point</button>
-            </div>
+    <main>
+        <div class="chart-container">
+            <canvas id="balanceChart"></canvas>
+            <button class="add-data" onclick="addData()">Add Deposit</button>
         </div>
-        <canvas id="balanceChart"></canvas>
-    </div>
 
-    <!-- Modal Structure (Same as Previous Implementation) -->
+        <div class="crew-level">
+            <h2>Crew Level</h2>
+            <p class="level">85</p>
+        </div>
 
-    <script>
-        // Steam-like Chart Configuration
-        const chartConfig = {
-            type: 'line',
-            data: {
-                labels: generateTimeLabels('24h'),
-                datasets: [{
-                    label: 'Total Balance',
-                    data: generateSampleData(),
-                    borderColor: '#e0e0e0',
-                    borderWidth: 2,
-                    pointRadius: 0,
-                    tension: 0.4,
-                    fill: {
-                        target: 'origin',
-                        above: 'rgba(224, 224, 224, 0.08)'
-                    }
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false,
-                        backgroundColor: '#0a0a0a',
-                        borderColor: 'rgba(255, 255, 255, 0.15)',
-                        borderWidth: 1,
-                        bodyColor: '#e0e0e0',
-                        titleColor: '#888',
-                        padding: 10,
-                        callbacks: {
-                            title: () => '',
-                            label: (context) => {
-                                const value = context.parsed.y;
-                                return `$${value.toLocaleString()} • ${context.label}`;
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.05)',
-                            borderColor: 'rgba(255, 255, 255, 0.1)'
-                        },
-                        ticks: {
-                            color: '#888',
-                            maxRotation: 0,
-                            autoSkip: true,
-                            maxTicksLimit: 10
-                        }
-                    },
-                    y: {
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.05)',
-                            borderColor: 'rgba(255, 255, 255, 0.1)'
-                        },
-                        ticks: {
-                            color: '#888',
-                            callback: (value) => `$${value.toLocaleString()}`
-                        }
-                    }
-                },
-                interaction: {
-                    mode: 'index',
-                    intersect: false
-                }
-            }
-        };
+        <div class="crew-members">
+            <div class="member">
+                <div class="profile-pic"></div>
+                <h3>Member 1</h3>
+                <p>Role</p>
+            </div>
+            <!-- Add more member divs as needed -->
+        </div>
+    </main>
 
-        // Initialize Chart
-        const chart = new Chart(document.getElementById('balanceChart'), chartConfig);
-
-        // Generate Sample Data (Replace with Real Data)
-        function generateSampleData() {
-            return Array.from({length: 24}, () => Math.floor(Math.random() * 10000) + 5000);
-        }
-
-        function generateTimeLabels(range) {
-            const now = new Date();
-            switch(range) {
-                case '24h':
-                    return Array.from({length: 24}, (_, i) => {
-                        const d = new Date(now - (i * 3600000));
-                        return d.toLocaleTimeString([], {hour: '2-digit'});
-                    }).reverse();
-                case '7d':
-                    return Array.from({length: 7}, (_, i) => {
-                        const d = new Date(now - (i * 86400000));
-                        return d.toLocaleDateString([], {weekday: 'short'});
-                    }).reverse();
-                case '1m':
-                    return Array.from({length: 30}, (_, i) => {
-                        const d = new Date(now - (i * 86400000));
-                        return d.toLocaleDateString([], {day: 'numeric', month: 'short'});
-                    }).reverse();
-                default:
-                    return [];
-            }
-        }
-
-        function updateTimePeriod(range) {
-            document.querySelectorAll('.period-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            chart.data.labels = generateTimeLabels(range);
-            chart.data.datasets[0].data = generateSampleData();
-            chart.update();
-        }
-
-        // Keep existing modal and data input functionality
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
