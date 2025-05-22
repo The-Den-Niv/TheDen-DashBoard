@@ -56,7 +56,7 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
-        .chart-container {
+         .chart-container {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(12px) saturate(180%);
             border-radius: 15px;
@@ -64,21 +64,34 @@
             padding: 2rem;
             max-width: 800px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            position: relative;
+        }
+
+        .chart-title {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            font-family: 'UnifrakturMaguntia', cursive;
+            color: #e0e0e0;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .button-container {
+            margin-top: 1.5rem;
+            text-align: center;
         }
 
         .add-data-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
             background: rgba(255, 255, 255, 0.1);
             color: #e0e0e0;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1.5rem;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 1rem;
         }
 
         .add-data-btn:hover {
@@ -129,9 +142,11 @@
     </header>
 
     <div class="chart-container">
-        <button class="add-data-btn" onclick="showModal()">Add Data +</button>
+        <div class="chart-title">Crew Total Balance</div>
         <canvas id="balanceChart"></canvas>
-    </div>
+        <div class="button-container">
+            <button class="add-data-btn" onclick="showModal()">Add Data +</button>
+        </div>
 
     <div id="modal" class="modal">
         <div class="modal-content">
