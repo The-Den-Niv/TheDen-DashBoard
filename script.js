@@ -39,3 +39,9 @@ function toggleMenu() {
 addData();
 addData();
 addData();
+
+// Add progress animation
+document.addEventListener('DOMContentLoaded', () => {
+    const progress = document.querySelector('.progress');
+    progress.style.width = '75%'; // Sync with actual level percentage
+});
