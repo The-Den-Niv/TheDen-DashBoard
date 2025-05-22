@@ -4,32 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Den</title>
-    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: #0a0a0a;
+            padding: 1rem;
+            position: relative;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 5px rgba(255, 255, 255, 0.1); }
+            to { box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); }
+        }
+
+        .nav-button {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .nav-button span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: #e0e0e0;
+            margin: 4px 0;
+        }
+
+        .title {
+            font-family: 'UnifrakturMaguntia', cursive;
+            font-size: 2.5rem;
+            color: #f0f0f0;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            margin: 2rem auto;
+            padding: 1rem;
+            max-width: 800px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
-    <header class="glow-animation">
-         <a href="#" class="home-link">
-         <h1 id="site-title">The Den</h1>
-        </a>
-        
-        <div class="nav-container">
-            <button id="nav-button">☰</button>
-            <div class="dropdown-content">
-                <a href="#">Home</a>
-                <a href="#">About</a>
-                <a href="#">Contact</a>
-                <a href="#" id="admin-login">Admin</a>
-            </div>
+    <header class="header">
+        <div class="nav-button">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
+        <h1 class="title">The Den</h1>
     </header>
 
-    <div id="admin-panel" class="glow-on-hover">
-        <h2>Admin Panel</h2>
-        <input type="file" id="data-upload">
-        <button onclick="uploadData()">Import Data</button>
+    <div class="chart-container">
+        <canvas id="balanceChart"></canvas>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Sample data - replace with your actual data
+        const data = {
+            labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'],
+            datasets: [{
+                label: 'Crew Total Balance',
+                data: [500, 1500, 750, 2000, 3000],
+                borderColor: '#e0e0e0',
+                tension: 0.4,
+                fill: false
+            }]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#e0e0e0'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => `$${context.parsed.y}`
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#e0e0e0' }
+                    },
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { 
+                            color: '#e0e0e0',
+                            callback: (value) => `$${value}`
+                        }
+                    }
+                }
+            }
+        };
+
+        new Chart(document.getElementById('balanceChart'), config);
+    </script>
 </body>
 </html>
