@@ -37,23 +37,14 @@ const chart = new Chart(ctx, {
 // Navigation toggle
 function toggleNav() {
     const nav = document.querySelector('.nav-dropdown');
-    if (nav.style.display === 'block') {
-        nav.style.display = 'none';
-    } else {
-        // Close any other open dropdowns
-        document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
-            dropdown.style.display = 'none';
-        });
-        nav.style.display = 'block';
-    }
+    nav.classList.toggle('active');
 }
 
 // Close dropdown when clicking outside
 document.addEventListener('click', function(event) {
+    const nav = document.querySelector('.nav-dropdown');
     if (!event.target.closest('.nav-btn') && !event.target.closest('.nav-dropdown')) {
-        document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
-            dropdown.style.display = 'none';
-        });
+        nav.classList.remove('active');
     }
 });
 
