@@ -50,3 +50,18 @@ function uploadData() {
         reader.readAsText(file);
     }
 }
+
+// Add to script.js
+document.querySelector('.home-link').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+    
+    // Add temporary click effect
+    document.getElementById('site-title').style.transform = 'scale(0.95)';
+    setTimeout(() => {
+        document.getElementById('site-title').style.transform = 'scale(1)';
+    }, 200);
+});
