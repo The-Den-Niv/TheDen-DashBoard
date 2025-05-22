@@ -1,0 +1,1 @@
+const ADMIN_PASSWORD = 'your_secure_password_here';
