@@ -20,12 +20,22 @@ header {
 
 #site-title {
     position: absolute;
-    top: 10px;
+    top: 15px;
     left: 20px;
-    font-family: 'MedievalSharp', cursive;
-    font-size: 2.5rem;
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 3.5rem;
     color: var(--accent-color);
-    text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7),
+                 0 0 10px rgba(0, 255, 157, 0.5);
+    letter-spacing: 2px;
+    margin: 0;
+    transition: all 0.3s ease;
+}
+
+#site-title:hover {
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9),
+                 0 0 15px rgba(0, 255, 157, 0.7);
+    transform: scale(1.02);
 }
 
 .nav-container {
