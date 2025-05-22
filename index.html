@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Den</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1 id="site-title">The Den</h1>
+        <div class="nav-container">
+            <button id="nav-button">☰</button>
+            <div class="dropdown-content">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+                <a href="#" id="admin-login">Admin</a>
+            </div>
+        </div>
+    </header>
+
+    <div id="admin-panel" class="hidden">
+        <h2>Admin Panel</h2>
+        <input type="file" id="data-upload">
+        <button onclick="uploadData()">Import Data</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
