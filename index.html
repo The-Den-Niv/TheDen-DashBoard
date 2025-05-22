@@ -96,6 +96,50 @@
             background: rgba(255, 255, 255, 0.2);
         }
 
+        .controls-wrapper {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px) saturate(180%);
+            border-radius: 15px;
+            margin: 1rem auto;
+            padding: 1rem;
+            max-width: 800px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .time-period-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .period-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e0e0e0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .period-btn.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .period-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .add-data-btn {
+            /* Existing styles remain */
+            margin: 0;
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -143,9 +187,16 @@
         <canvas id="balanceChart"></canvas>
         </div>
 
-         <div class="button-wrapper">
+     <div class="controls-wrapper">
+        <div class="time-period-buttons">
+            <button class="period-btn active" onclick="updateTimePeriod('day')">Day</button>
+            <button class="period-btn" onclick="updateTimePeriod('week')">Week</button>
+            <button class="period-btn" onclick="updateTimePeriod('month')">Month</button>
+            <button class="period-btn" onclick="updateTimePeriod('lifetime')">Lifetime</button>
+        
+        </div>
         <button class="add-data-btn" onclick="showModal()">Add Data +</button>
-    </div>
+        </div>
         
     <div id="modal" class="modal">
         <div class="modal-content">
