@@ -34,14 +34,15 @@
         </div>
     </header>
 
-    <div class="login-modal" id="loginModal">
-        <div class="login-content">
-            <h2>Admin Login</h2>
-            <input type="text" placeholder="Username" id="username">
-            <input type="password" placeholder="Password" id="password">
-            <button onclick="login()">Login</button>
-        </div>
+<div class="login-modal" id="loginModal">
+    <div class="login-content">
+        <span class="close-btn" onclick="toggleLogin()">&times;</span>
+        <h2>Admin Login</h2>
+        <input type="text" placeholder="Username" id="username">
+        <input type="password" placeholder="Password" id="password">
+        <button onclick="login()">Login</button>
     </div>
+</div>
 
     <main>
         <div class="chart-container">
