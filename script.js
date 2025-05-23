@@ -1,3 +1,81 @@
+// ===== FIREBASE INITIALIZATION ===== //
+// Your Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyC56lEYzlg-f86opfRP1HAKZbthyZ43YFM",
+  authDomain: "theden-dashboard.firebaseapp.com",
+  databaseURL: "https://theden-dashboard-default-rtdb.firebaseio.com",
+  projectId: "theden-dashboard",
+  storageBucket: "theden-dashboard.firebasestorage.app",
+  messagingSenderId: "1013512631696",
+  appId: "1:1013512631696:web:843369462b1830cdb5af15",
+  measurementId: "G-KTZL0HJ132"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+// ===== END FIREBASE INIT ===== //
+
+// Then continue with your existing chart code...
+const ctx = document.getElementById('balanceChart').getContext('2d');
+
+// ===== ENHANCED DATA LOADING ===== //
+// Load initial data when page starts
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Load Crew Level (XP, Progress, etc.)
+    firebase.database().ref('crewData').once('value').then(snapshot => {
+        const data = snapshot.val();
+        if (data) {
+            document.querySelector('.level-display').textContent = data.level;
+            const progressRing = document.querySelector('.progress-ring');
+            progressRing.style.background = `conic-gradient(
+                #909090 ${data.progress}%,
+                rgba(144,144,144,0.1) 0
+            )`;
+            document.querySelector('.xp-total').textContent = 
+                `Total XP: ${parseInt(data.xp).toLocaleString()}`;
+        }
+    });
+
+    // 2. Load Chart Data
+    firebase.database().ref('chartData').once('value').then(snapshot => {
+        const chartData = snapshot.val();
+        if (chartData) {
+            const labels = [];
+            const amounts = [];
+            Object.values(chartData).forEach(item => {
+                labels.push(item.date);
+                amounts.push(item.amount);
+            });
+            chart.data.labels = labels;
+            chart.data.datasets[0].data = amounts;
+            chart.update();
+        }
+    });
+
+    // 3. Load Crew Members
+    firebase.database().ref('crewMembers').once('value').then(snapshot => {
+        const members = snapshot.val();
+        const container = document.querySelector('.crew-members-horizontal');
+        if (members) {
+            container.innerHTML = '';
+            Object.values(members).forEach(member => {
+                const memberCard = document.createElement('div');
+                memberCard.className = 'member-card';
+                memberCard.innerHTML = `
+                    <img class="profile-img" src="${member.image || 'assets/images/default.png'}" alt="${member.name}">
+                    <div class="member-info">
+                        <div class="member-level">Level ${member.level}</div>
+                        <h3 class="member-name">${member.name}</h3>
+                        <div class="member-rank">${member.rank}</div>
+                    </div>
+                `;
+                container.appendChild(memberCard);
+            });
+        }
+    });
+});
+// ===== END ENHANCED DATA LOADING ===== //
+
 // Initialize the balance chart
 const ctx = document.getElementById('balanceChart').getContext('2d');
 const chart = new Chart(ctx, {
