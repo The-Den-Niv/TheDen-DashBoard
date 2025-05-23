@@ -23,7 +23,7 @@ header {
 
 .logo {
     font-family: 'UnifrakturMaguntia', cursive;
-    color: #a0a0a0;
+    color: #dfdfdf;
     font-size: 3.5rem;
     margin: 0;
     transition: all 0.3s ease;
@@ -31,7 +31,7 @@ header {
     position: relative;
     
     /* Breathing glow animation */
-    animation: breathing-glow 4s ease-in-out infinite;
+    animation: breathing-glow 8s ease-in-out infinite;
 }
 
 @keyframes breathing-glow {
