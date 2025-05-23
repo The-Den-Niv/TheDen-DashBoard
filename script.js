@@ -48,50 +48,40 @@ document.addEventListener('click', function(event) {
     }
 });
 
-function openSettings() {
-    document.getElementById('settingsPage').style.display = 'flex';
+// Admin Authentication
+const ADMIN_PASSWORD = "crew123"; // Change this to your desired password
+
+function showAdminLogin() {
+    document.getElementById('adminLoginModal').style.display = 'flex';
 }
 
-function closeSettings() {
-    document.getElementById('settingsPage').style.display = 'none';
+function closeAdminLogin() {
+    document.getElementById('adminLoginModal').style.display = 'none';
+    document.getElementById('loginError').textContent = '';
 }
 
-function addChartData() {
-    const date = document.getElementById('chartDate').value;
-    const amount = document.getElementById('chartAmount').value;
+function attemptLogin() {
+    const password = document.getElementById('adminPassword').value;
+    const errorElement = document.getElementById('loginError');
     
-    if (date && amount) {
-        // Add to chart logic here
-        alert(`Added $${amount} for ${date}`);
+    if (password === ADMIN_PASSWORD) {
+        closeAdminLogin();
+        document.getElementById('adminPanel').style.display = 'flex';
     } else {
-        alert('Please enter both date and amount');
+        errorElement.textContent = 'Invalid password';
     }
 }
 
-function addCrewMember() {
-    const name = document.getElementById('newMemberName').value;
-    if (name) {
-        // Add crew member logic here
-        alert(`Added new crew member: ${name}`);
+function closeAdminPanel() {
+    document.getElementById('adminPanel').style.display = 'none';
+}
+
+// Close modals when clicking outside
+window.onclick = function(event) {
+    if (event.target === document.getElementById('adminLoginModal')) {
+        closeAdminLogin();
+    }
+    if (event.target === document.getElementById('adminPanel')) {
+        closeAdminPanel();
     }
 }
-
-function resetData() {
-    if (confirm('WARNING: This will reset all data. Continue?')) {
-        // Reset logic here
-        alert('All data has been reset');
-    }
-}
-// Open settings page
-function openSettings() {
-    document.getElementById('settingsPage').style.display = 'flex';
-}
-
-// Close settings page
-function closeSettings() {
-    document.getElementById('settingsPage').style.display = 'none';
-}
-
-// Update navigation dropdown link to use the new function
-// Change your settings link in the nav dropdown to:
-// <a href="#" onclick="openSettings()">Settings</a>
