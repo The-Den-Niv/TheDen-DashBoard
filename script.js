@@ -99,19 +99,15 @@ window.onclick = function(event) {
 /**
  * Admin Panel Functions
  */
+// Save Chart Data
 function addChartData() {
-    const date = document.getElementById('chartDate').value;
-    const amount = document.getElementById('chartAmount').value;
-    
-    if (date && amount) {
-        // Add to chart logic here
-        chart.data.labels.push(date);
-        chart.data.datasets[0].data.push(amount);
-        chart.update();
-        alert(`Added $${amount} for ${date}`);
-    } else {
-        alert('Please enter both date and amount');
-    }
+  const date = document.getElementById('chartDate').value;
+  const amount = document.getElementById('chartAmount').value;
+
+  firebase.database().ref('chartData').push({
+    date: date,
+    amount: amount
+  }).then(() => alert("Data point added!"));
 }
 
 function addCrewMember() {
@@ -129,20 +125,22 @@ function resetData() {
     }
 }
 
-/**
- * Update Crew Level Stats
- */
+// Save Crew Level Data
 function updateCrewStats() {
-    // Get input values
-    const newLevel = document.getElementById('adminLevelInput').value;
-    const newProgress = document.getElementById('adminProgressInput').value;
-    const newXP = document.getElementById('adminXPInput').value;
+  const level = document.getElementById('adminLevelInput').value;
+  const progress = document.getElementById('adminProgressInput').value;
+  const xp = document.getElementById('adminXPInput').value;
 
-    // Validate inputs
-    if (!newLevel || !newProgress || !newXP) {
-        alert('Please fill all fields');
-        return;
-    }
+  firebase.database().ref('crewData').set({
+    level: level,
+    progress: progress,
+    xp: xp,
+    updatedAt: new Date().toISOString()
+  }).then(() => {
+    alert("Data saved for all users!");
+    closeAdminPanel();
+  });
+}
 
     // Update level display
     document.querySelector('.level-display').textContent = newLevel;
@@ -184,3 +182,39 @@ function showAdminLogin() {
     // Show login modal
     document.getElementById('adminLoginModal').style.display = 'flex';
 }
+
+// Listen for Crew Level Changes
+firebase.database().ref('crewData').on('value', (snapshot) => {
+  const data = snapshot.val();
+  if (!data) return;
+
+  document.querySelector('.level-display').textContent = data.level;
+  
+  // Update progress ring
+  const progressRing = document.querySelector('.progress-ring');
+  progressRing.style.background = `conic-gradient(
+    #909090 ${data.progress}%,
+    rgba(144,144,144,0.1) 0
+  )`;
+  
+  document.querySelector('.xp-total').textContent = `Total XP: ${parseInt(data.xp).toLocaleString()}`;
+});
+
+// Listen for Chart Updates
+firebase.database().ref('chartData').on('value', (snapshot) => {
+  const chartData = snapshot.val();
+  if (!chartData) return;
+
+  const labels = [];
+  const amounts = [];
+  
+  Object.values(chartData).forEach(item => {
+    labels.push(item.date);
+    amounts.push(item.amount);
+  });
+
+  chart.data.labels = labels;
+  chart.data.datasets[0].data = amounts;
+  chart.update();
+});
+
