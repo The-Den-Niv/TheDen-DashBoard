@@ -7,120 +7,99 @@
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style>
-    ::-webkit-scrollbar {
-        width: 8px;
-        background: #2b2b2b;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-        background: #5e5e5e;
-        border-radius: 4px;
-    }
-</style>
-    
 </head>
-
-<!-- Admin Panel -->
-<div class="admin-panel" id="adminPanel">
-    <div class="admin-container">
-        <div class="admin-header">
-            <h2>Admin Panel</h2>
-            <span class="close-admin" onclick="closeAdminPanel()">&times;</span>
-        </div>
-        <div class="admin-content">
-            <!-- Chart Data Controls -->
-            <div class="settings-section">
-                <h3>Balance Chart</h3>
-                <div class="setting-item">
-                    <label>Add New Data Point</label>
-                    <div class="admin-control">
-                        <input type="date" id="chartDate">
-                        <input type="number" id="chartAmount" placeholder="Amount ($)">
-                        <button onclick="addChartData()">Add</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Crew Management -->
-            <div class="settings-section">
-                <h3>Crew Members</h3>
-                <div class="setting-item">
-                    <label>Add New Member</label>
-                    <div class="admin-control">
-                        <input type="text" id="newMemberName" placeholder="Name">
-                        <button onclick="addCrewMember()">Add</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- System Controls -->
-            <div class="settings-section">
-                <h3>System</h3>
-                <div class="admin-control">
-                    <button class="danger-btn" onclick="resetData()">Reset All Data</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Admin Login Modal -->
-<div class="admin-login-modal" id="adminLoginModal">
-    <div class="login-container">
-        <span class="close-login" onclick="closeAdminLogin()">&times;</span>
-        <h2>Admin Login</h2>
-        <input type="password" id="adminPassword" placeholder="Enter Admin Password">
-        <button onclick="attemptLogin()">Authenticate</button>
-        <p class="login-error" id="loginError"></p>
-    </div>
-    
 <body>
     <header>
         <div class="nav-btn" onclick="toggleNav()">☰</div>
         <h1 class="logo">The Den</h1>
-        <button class="admin-btn" onclick="toggleLogin()">Admin</button>
-     <div class="nav-dropdown">
-    <a href="#">Home</a>
-    <a href="#">Crew</a>
-    <a href="#" onclick="showAdminLogin()">Admin Panel</a> <!-- Changed from Settings -->
-</div>
-
+        <div class="nav-dropdown">
+            <a href="#">Home</a>
+            <a href="#">Crew</a>
+            <a href="#" onclick="showAdminLogin()">Admin Panel</a>
+        </div>
+    </header>
 
     <main>
         <div class="chart-container">
             <canvas id="balanceChart"></canvas>
-            <button class="add-data-btn" id="addDataBtn" onclick="showDataForm()" style="display: none;">Add Data</button>
         </div>
 
         <div class="crew-level">
             <h2 class="crew-level-title">Crew Level</h2>
-        <div class="progress-container">
-            <div class="progress-ring"></div>
-            <div class="level-display">5</div>
-        </div>
+            <div class="progress-container">
+                <div class="progress-ring"></div>
+                <div class="level-display">5</div>
+            </div>
             <div class="xp-total">Total XP: 1,750,000</div>
         </div>
         
         <div class="crew-members">
             <div class="member-card">
-            <div class="profile-img"></div>
-            <h3>Crew Member 1</h3>
-        </div>
-        
-        <div class="member-card">
-            <div class="profile-img"></div>
-            <h3>Crew Member 2</h3>
-        </div>
-            
-        <div class="member-card">
-            <div class="profile-img"></div>
-            <h3>Crew Member 3</h3>
-        </div>
-            
+                <div class="profile-img"></div>
+                <h3>Crew Member 1</h3>
+            </div>
+            <div class="member-card">
+                <div class="profile-img"></div>
+                <h3>Crew Member 2</h3>
+            </div>
+            <div class="member-card">
+                <div class="profile-img"></div>
+                <h3>Crew Member 3</h3>
+            </div>
         </div>
     </main>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h2>Admin Panel</h2>
+                <span class="close-admin" onclick="closeAdminPanel()">&times;</span>
+            </div>
+            <div class="admin-content">
+                <div class="settings-section">
+                    <h3>Balance Chart</h3>
+                    <div class="setting-item">
+                        <label>Add New Data Point</label>
+                        <div class="admin-control">
+                            <input type="date" id="chartDate">
+                            <input type="number" id="chartAmount" placeholder="Amount ($)">
+                            <button onclick="addChartData()">Add</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h3>Crew Members</h3>
+                    <div class="setting-item">
+                        <label>Add New Member</label>
+                        <div class="admin-control">
+                            <input type="text" id="newMemberName" placeholder="Name">
+                            <button onclick="addCrewMember()">Add</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h3>System</h3>
+                    <div class="admin-control">
+                        <button class="danger-btn" onclick="resetData()">Reset All Data</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div class="admin-login-modal" id="adminLoginModal">
+        <div class="login-container">
+            <span class="close-login" onclick="closeAdminLogin()">&times;</span>
+            <h2>Admin Login</h2>
+            <input type="password" id="adminPassword" placeholder="Enter Admin Password">
+            <button onclick="attemptLogin()">Authenticate</button>
+            <p class="login-error" id="loginError"></p>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
