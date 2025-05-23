@@ -37,14 +37,14 @@ const chart = new Chart(ctx, {
 // Navigation toggle
 function toggleNav() {
     const nav = document.querySelector('.nav-dropdown');
-    nav.classList.toggle('active');
+    nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
 }
 
 // Close dropdown when clicking outside
 document.addEventListener('click', function(event) {
     const nav = document.querySelector('.nav-dropdown');
     if (!event.target.closest('.nav-btn') && !event.target.closest('.nav-dropdown')) {
-        nav.classList.remove('active');
+        nav.style.display = 'none';
     }
 });
 
