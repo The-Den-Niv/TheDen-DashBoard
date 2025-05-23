@@ -121,6 +121,23 @@ main {
     color: #c0c0c0;
     font-weight: bold;
     text-shadow: 0 0 15px rgba(192,192,192,0.4);
+    
+    /* Breathing glow animation */
+    animation: level-glow 8s ease-in-out infinite;
+}
+
+@keyframes level-glow {
+    0%, 100% {
+        text-shadow: 0 0 10px rgba(192,192,192,0.6),
+                    0 0 20px rgba(192,192,192,0.4);
+        color: #c0c0c0;
+    }
+    50% {
+        text-shadow: 0 0 15px rgba(224,224,224,0.8),
+                    0 0 30px rgba(224,224,224,0.6),
+                    0 0 45px rgba(224,224,224,0.3);
+        color: #e0e0e0;
+    }
 }
 
 /* Crew Members Section */
