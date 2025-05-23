@@ -93,7 +93,7 @@ main {
     height: 100%;
     border-radius: 50%;
     background: conic-gradient(
-        #909090 85%,  /* Change percentage for progress */
+        #909090 84.84%%,  /* Change percentage for progress */
         rgba(144,144,144,0.1) 0
     );
     mask: radial-gradient(transparent 65%, #000 66%);
@@ -105,9 +105,31 @@ main {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.level-number {
     font-size: 3rem;
     color: #909090;
+    line-height: 1;
     text-shadow: 0 0 15px rgba(144,144,144,0.3);
+}
+
+.xp-needed {
+    font-size: 0.9rem;
+    color: #707070;
+    margin-top: 0.5rem;
+}
+
+.xp-total {
+    text-align: center;
+    color: #808080;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    padding: 0.8rem;
+    background: rgba(30,30,30,0.6);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.05);
 }
 
 .crew-level h2 {
