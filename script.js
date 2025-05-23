@@ -128,3 +128,59 @@ function resetData() {
         alert('All data has been reset');
     }
 }
+
+/**
+ * Update Crew Level Stats
+ */
+function updateCrewStats() {
+    // Get input values
+    const newLevel = document.getElementById('adminLevelInput').value;
+    const newProgress = document.getElementById('adminProgressInput').value;
+    const newXP = document.getElementById('adminXPInput').value;
+
+    // Validate inputs
+    if (!newLevel || !newProgress || !newXP) {
+        alert('Please fill all fields');
+        return;
+    }
+
+    // Update level display
+    document.querySelector('.level-display').textContent = newLevel;
+
+    // Update progress ring
+    const progressRing = document.querySelector('.progress-ring');
+    progressRing.style.background = `conic-gradient(
+        #909090 ${newProgress}%,
+        rgba(144,144,144,0.1) 0
+    )`;
+
+    // Update XP display (formatted with commas)
+    document.querySelector('.xp-total').textContent = 
+        `Total XP: ${parseInt(newXP).toLocaleString()}`;
+
+    // Close admin panel and show success
+    closeAdminPanel();
+    alert('Crew stats updated successfully!');
+}
+
+// Load current values when opening admin panel
+function showAdminLogin() {
+    // Get current values
+    const currentLevel = document.querySelector('.level-display').textContent;
+    const currentXP = document.querySelector('.xp-total').textContent
+        .replace('Total XP: ', '')
+        .replace(/,/g, '');
+    
+    // Get current progress percentage
+    const progressRing = document.querySelector('.progress-ring');
+    const progressMatch = progressRing.style.background.match(/(\d+\.?\d*)%/);
+    const currentProgress = progressMatch ? progressMatch[1] : '84.84';
+
+    // Set values in admin form
+    document.getElementById('adminLevelInput').value = currentLevel;
+    document.getElementById('adminProgressInput').value = currentProgress;
+    document.getElementById('adminXPInput').value = currentXP;
+
+    // Show login modal
+    document.getElementById('adminLoginModal').style.display = 'flex';
+}
