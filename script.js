@@ -101,3 +101,17 @@ window.onclick = function(event) {
         modal.style.display = 'none';
     }
 }
+
+// Open settings page
+function openSettings() {
+    document.getElementById('settingsPage').style.display = 'flex';
+}
+
+// Close settings page
+function closeSettings() {
+    document.getElementById('settingsPage').style.display = 'none';
+}
+
+// Update navigation dropdown link to use the new function
+// Change your settings link in the nav dropdown to:
+// <a href="#" onclick="openSettings()">Settings</a>
