@@ -64,35 +64,33 @@ main {
     max-width: 100%;
 }
 
-/* Crew Level */
+/* Crew Level Container */
 .crew-level {
-    background: rgba(40, 40, 40, 0.6);
+    background: rgba(30, 30, 30, 0.7);
     border-radius: 25px;
     padding: 2rem;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.1);
     text-align: center;
-    grid-column: 2 / 3;
-    grid-row: 1;
-    height: 400px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
 }
 
-/* Crew Level Progress */
-.progress-container {
-    width: 180px;
-    height: 180px;
-    margin: 0 auto 1rem;
-    position: relative;
+/* Title */
+.crew-level-title {
+    color: #c0c0c0;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* Progress Ring */
 .progress-container {
-    width: 160px;
-    height: 160px;
-    margin: 0 auto;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 1.5rem;
     position: relative;
 }
 
@@ -101,35 +99,29 @@ main {
     height: 100%;
     border-radius: 50%;
     background: conic-gradient(
-        #909090 84.84%,  /* Adjust percentage for progress */
+        #909090 84.84%%,
         rgba(144,144,144,0.1) 0
     );
     mask: radial-gradient(transparent 65%, #000 66%);
 }
 
-/* Centered Level Number */
+/* Level Number */
 .level-display {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 2.5rem;
+    font-size: 3.5rem; /* Larger size */
     color: #c0c0c0;
     font-weight: bold;
+    text-shadow: 0 0 15px rgba(192,192,192,0.4);
 }
 
-/* XP Total Display */
+/* XP Total */
 .xp-total {
-    margin-top: 1.5rem;
     color: #909090;
-    font-size: 1rem;
-}
-
-.crew-level h2 {
-    text-align: center;
-    margin: 0;
-    font-size: 1.5rem;
-    color: #808080;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
 }
 
 /* Crew Members */
