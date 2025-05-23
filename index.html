@@ -7,6 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
 </head>
 <body>
     <header>
@@ -138,32 +141,23 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
-</body>
-
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyC56lEYzlg-f86opfRP1HAKZbthyZ43YFM",
-    authDomain: "theden-dashboard.firebaseapp.com",
-    databaseURL: "https://theden-dashboard-default-rtdb.firebaseio.com",
-    projectId: "theden-dashboard",
-    storageBucket: "theden-dashboard.firebasestorage.app",
-    messagingSenderId: "1013512631696",
-    appId: "1:1013512631696:web:843369462b1830cdb5af15",
-    measurementId: "G-KTZL0HJ132"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyC56lEYzlg-f86opfRP1HAKZbthyZ43YFM",
+            authDomain: "theden-dashboard.firebaseapp.com",
+            databaseURL: "https://theden-dashboard-default-rtdb.firebaseio.com",
+            projectId: "theden-dashboard",
+            storageBucket: "theden-dashboard.firebasestorage.app",
+            messagingSenderId: "1013512631696",
+            appId: "1:1013512631696:web:843369462b1830cdb5af15",
+            measurementId: "G-KTZL0HJ132"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
     
+    <script src="script.js"></script>
+</body>   
 </html>
