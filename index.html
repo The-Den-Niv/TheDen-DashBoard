@@ -112,10 +112,17 @@
                 <div class="settings-section">
                     <h3>Crew Members</h3>
                     <div class="setting-item">
-                        <label>Add New Member</label>
-                        <div class="admin-control">
-                            <input type="text" id="newMemberName" placeholder="Name">
-                            <button onclick="addCrewMember()">Add</button>
+                    <label>Add New Member</label>
+                    <div class="admin-control">
+                    <input type="text" id="newMemberName" placeholder="Name" required>
+                    <input type="number" id="newMemberLevel" placeholder="Level" min="1">
+                    <select id="newMemberRank">
+                    <option value="Member">Member</option>
+                    <option value="Sergeant">Sergeant</option>
+                    <option value="Lieutenant">Lieutenant</option>
+                    <option value="Captain">Captain</option>
+                    </select>
+                    <button onclick="addCrewMember()">Add Member</button>
                         </div>
                     </div>
                 </div>
