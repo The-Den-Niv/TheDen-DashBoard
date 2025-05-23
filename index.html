@@ -57,6 +57,24 @@
                 <span class="close-admin" onclick="closeAdminPanel()">&times;</span>
             </div>
             <div class="admin-content">
+
+                <div class="settings-section">
+                    <h3>Crew Level Controls</h3>
+                    <div class="setting-item">
+                    <label>Current Level</label>
+                    <input type="number" id="adminLevelInput" min="1" value="5">
+                </div>
+                <div class="setting-item">
+                    <label>Progress Percentage</label>
+                    <input type="number" id="adminProgressInput" min="0" max="100" value="84.84">
+                </div>
+                <div class="setting-item">
+                    <label>Total XP</label>
+                    <input type="number" id="adminXPInput" value="1750000">
+                </div>
+                    <button onclick="updateCrewStats()">Update Crew Stats</button>
+                </div>
+
                 <div class="settings-section">
                     <h3>Balance Chart</h3>
                     <div class="setting-item">
