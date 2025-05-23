@@ -142,11 +142,11 @@ main {
 .profile-img {
     width: 100px;
     height: 100px;
-    border-radius: 25%;
-    background: linear-gradient(145deg, #4a4a4a, #3a3a3a);
-    margin: 0 auto;
+    border-radius: 25%; /* For rounded rectangle shape */
+    object-fit: cover; /* Ensures image fills space without distortion */
     border: 2px solid #909090;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    background: #3a3a3a; /* Fallback if image fails to load */
 }
 
 
