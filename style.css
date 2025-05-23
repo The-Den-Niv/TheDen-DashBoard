@@ -101,7 +101,7 @@ main {
     height: 100%;
     border-radius: 50%;
     background: conic-gradient(
-        #909090 75%,  /* Adjust percentage for progress */
+        #909090 84.84%,  /* Adjust percentage for progress */
         rgba(144,144,144,0.1) 0
     );
     mask: radial-gradient(transparent 65%, #000 66%);
