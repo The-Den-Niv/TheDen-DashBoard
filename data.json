@@ -1,0 +1,24 @@
+{
+  "crewData": {
+    "level": 5,
+    "progress": 84.84,
+    "xp": 1750000
+  },
+  "chartData": [
+    {"date": "2023-01", "amount": 12500},
+    {"date": "2023-02", "amount": 14300}
+  ],
+  "crewMembers": [
+    {
+      "name": "Niiv_",
+      "level": 82,
+      "rank": "Captain",
+      "image": "assets/images/Niiv_PFP.png"
+    },
+    {
+      "name": "ComedySama",
+      "level": 1,
+      "rank": "Member"
+    }
+  ]
+}
