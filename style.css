@@ -29,6 +29,25 @@ header {
     transition: all 0.3s ease;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
     position: relative;
+
+    /* Breathing glow animation */
+    animation: breathing-glow 4s ease-in-out infinite;
+}
+
+@keyframes breathing-glow {
+    0% {
+        text-shadow: 0 0 10px rgba(160,160,160,0.8),
+                     0 0 20px rgba(160,160,160,0.6);
+    }
+    50% {
+        text-shadow: 0 0 20px rgba(160,160,160,0.9),
+                     0 0 40px rgba(160,160,160,0.7),
+                     0 0 60px rgba(160,160,160,0.4);
+    }
+    100% {
+        text-shadow: 0 0 10px rgba(160,160,160,0.8),
+                     0 0 20px rgba(160,160,160,0.6);
+    }
 }
 
 .logo:hover {
