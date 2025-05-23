@@ -88,48 +88,41 @@ main {
     position: relative;
 }
 
+/* Progress Ring */
+.progress-container {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto;
+    position: relative;
+}
+
 .progress-ring {
     width: 100%;
     height: 100%;
     border-radius: 50%;
     background: conic-gradient(
-        #909090 84.84%%,  /* Change percentage for progress */
+        #909090 75%,  /* Adjust percentage for progress */
         rgba(144,144,144,0.1) 0
     );
     mask: radial-gradient(transparent 65%, #000 66%);
-    -webkit-mask: radial-gradient(transparent 65%, #000 66%);
 }
 
+/* Centered Level Number */
 .level-display {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    text-align: center;
+    font-size: 2.5rem;
+    color: #c0c0c0;
+    font-weight: bold;
 }
 
-.level-number {
-    font-size: 3rem;
-    color: #909090;
-    line-height: 1;
-    text-shadow: 0 0 15px rgba(144,144,144,0.3);
-}
-
-.xp-needed {
-    font-size: 0.9rem;
-    color: #707070;
-    margin-top: 0.5rem;
-}
-
+/* XP Total Display */
 .xp-total {
-    text-align: center;
-    color: #808080;
-    font-size: 1.1rem;
-    margin-top: 1rem;
-    padding: 0.8rem;
-    background: rgba(30,30,30,0.6);
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.05);
+    margin-top: 1.5rem;
+    color: #909090;
+    font-size: 1rem;
 }
 
 .crew-level h2 {
