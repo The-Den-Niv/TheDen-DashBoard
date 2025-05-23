@@ -26,46 +26,41 @@
 <div class="settings-page" id="settingsPage">
     <div class="settings-container">
         <div class="settings-header">
-            <h2>Website Settings</h2>
+            <h2>Admin Settings</h2>
             <span class="close-settings" onclick="closeSettings()">&times;</span>
         </div>
         <div class="settings-content">
+            <!-- Chart Data Controls -->
             <div class="settings-section">
-                <h3>Appearance</h3>
+                <h3>Balance Chart</h3>
                 <div class="setting-item">
-                    <label>Theme Color</label>
-                    <select>
-                        <option>Dark Metal</option>
-                        <option>Obsidian Black</option>
-                        <option>Steel Gray</option>
-                    </select>
-                </div>
-                <div class="setting-item">
-                    <label>Glass Effect Intensity</label>
-                    <input type="range" min="0" max="100" value="70">
+                    <label>Add New Data Point</label>
+                    <div class="admin-control">
+                        <input type="date" id="chartDate">
+                        <input type="number" id="chartAmount" placeholder="Amount ($)">
+                        <button onclick="addChartData()">Add</button>
+                    </div>
                 </div>
             </div>
             
+            <!-- Crew Management -->
             <div class="settings-section">
-                <h3>Notifications</h3>
+                <h3>Crew Members</h3>
                 <div class="setting-item">
-                    <label>
-                        <input type="checkbox" checked>
-                        Enable XP Gain Alerts
-                    </label>
-                </div>
-                <div class="setting-item">
-                    <label>
-                        <input type="checkbox">
-                        Enable Crew Level Up Sounds
-                    </label>
+                    <label>Add New Member</label>
+                    <div class="admin-control">
+                        <input type="text" id="newMemberName" placeholder="Name">
+                        <button onclick="addCrewMember()">Add</button>
+                    </div>
                 </div>
             </div>
             
+            <!-- System Controls -->
             <div class="settings-section">
-                <h3>Data</h3>
-                <button class="export-btn">Export Crew Data</button>
-                <button class="import-btn">Import Crew Data</button>
+                <h3>System</h3>
+                <div class="admin-control">
+                    <button class="danger-btn" onclick="resetData()">Reset All Data</button>
+                </div>
             </div>
         </div>
     </div>
@@ -76,12 +71,12 @@
         <div class="nav-btn" onclick="toggleNav()">☰</div>
         <h1 class="logo">The Den</h1>
         <button class="admin-btn" onclick="toggleLogin()">Admin</button>
-        <div class="nav-dropdown">
-            <a href="#">Home</a>
-            <a href="#">Crew</a>
-            <a href="#">Finances</a>
-            <a href="#" onclick="openSettings()">Settings</a>
-        </div>
+      <div class="nav-dropdown">
+        <a href="#">Home</a>
+        <a href="#">Crew</a>
+        <a href="#" onclick="openSettings()">Settings</a>
+    </div>
+
     </header>
 
 <div class="login-modal" id="loginModal">
