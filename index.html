@@ -21,6 +21,56 @@
 </style>
     
 </head>
+
+<!-- Settings Page -->
+<div class="settings-page" id="settingsPage">
+    <div class="settings-container">
+        <div class="settings-header">
+            <h2>Website Settings</h2>
+            <span class="close-settings" onclick="closeSettings()">&times;</span>
+        </div>
+        <div class="settings-content">
+            <div class="settings-section">
+                <h3>Appearance</h3>
+                <div class="setting-item">
+                    <label>Theme Color</label>
+                    <select>
+                        <option>Dark Metal</option>
+                        <option>Obsidian Black</option>
+                        <option>Steel Gray</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <label>Glass Effect Intensity</label>
+                    <input type="range" min="0" max="100" value="70">
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Notifications</h3>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" checked>
+                        Enable XP Gain Alerts
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox">
+                        Enable Crew Level Up Sounds
+                    </label>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Data</h3>
+                <button class="export-btn">Export Crew Data</button>
+                <button class="import-btn">Import Crew Data</button>
+            </div>
+        </div>
+    </div>
+</div>
+    
 <body>
     <header>
         <div class="nav-btn" onclick="toggleNav()">☰</div>
