@@ -48,60 +48,40 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Admin login
-let isAdmin = false;
-
-// Toggle login modal
-function toggleLogin() {
-    const modal = document.getElementById('loginModal');
-    modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+function openSettings() {
+    document.getElementById('settingsPage').style.display = 'flex';
 }
 
-// Close modal when clicking outside
-window.onclick = function(event) {
-    const modal = document.getElementById('loginModal');
-    if(event.target === modal) {
-        modal.style.display = 'none';
-    }
+function closeSettings() {
+    document.getElementById('settingsPage').style.display = 'none';
 }
 
-// Close modal with ESC key
-document.addEventListener('keydown', (e) => {
-    if(e.key === 'Escape') {
-        document.getElementById('loginModal').style.display = 'none';
-    }
-});
-
-function login() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+function addChartData() {
+    const date = document.getElementById('chartDate').value;
+    const amount = document.getElementById('chartAmount').value;
     
-    if(username === 'admin' && password === 'secret') {
-        isAdmin = true;
-        document.getElementById('addDataBtn').style.display = 'block';
-        document.getElementById('loginModal').style.display = 'none';
+    if (date && amount) {
+        // Add to chart logic here
+        alert(`Added $${amount} for ${date}`);
+    } else {
+        alert('Please enter both date and amount');
     }
 }
 
-// Data form (simplified)
-function showDataForm() {
-    const date = prompt('Enter date (YYYY-MM-DD):');
-    const amount = prompt('Enter amount ($):');
-    if(date && amount) {
-        chart.data.labels.push(date);
-        chart.data.datasets[0].data.push(amount);
-        chart.update();
+function addCrewMember() {
+    const name = document.getElementById('newMemberName').value;
+    if (name) {
+        // Add crew member logic here
+        alert(`Added new crew member: ${name}`);
     }
 }
 
-// Close modal when clicking outside
-window.onclick = function(event) {
-    const modal = document.getElementById('loginModal');
-    if(event.target == modal) {
-        modal.style.display = 'none';
+function resetData() {
+    if (confirm('WARNING: This will reset all data. Continue?')) {
+        // Reset logic here
+        alert('All data has been reset');
     }
 }
-
 // Open settings page
 function openSettings() {
     document.getElementById('settingsPage').style.display = 'flex';
