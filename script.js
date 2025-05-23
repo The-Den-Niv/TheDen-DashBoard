@@ -84,8 +84,15 @@ function attemptLogin() {
     const errorElement = document.getElementById('loginError');
     
     if (password === ADMIN_PASSWORD) {
-        closeAdminLogin();
-        document.getElementById('adminPanel').style.display = 'flex';
+        // Sign in anonymously to get write access
+        firebase.auth().signInAnonymously()
+            .then(() => {
+                closeAdminLogin();
+                document.getElementById('adminPanel').style.display = 'flex';
+            })
+            .catch(error => {
+                errorElement.textContent = 'Login failed: ' + error.message;
+            });
     } else {
         errorElement.textContent = 'Invalid password';
     }
@@ -110,30 +117,51 @@ window.onclick = function(event) {
 function addChartData() {
     const date = document.getElementById('chartDate').value;
     const amount = document.getElementById('chartAmount').value;
-    
-    if (date && amount) {
-        firebase.database().ref('chartData').push({
-            date: date,
-            amount: amount
-        }).then(() => {
-            alert("Data point added!");
-        });
-    } else {
+
+    if (!date || !amount) {
         alert('Please enter both date and amount');
+        return;
     }
+
+    firebase.database().ref('chartData').push({
+        date: date,
+        amount: amount,
+        addedAt: new Date().toISOString()
+    }).then(() => {
+        alert("Data point added!");
+        // Clear inputs
+        document.getElementById('chartDate').value = '';
+        document.getElementById('chartAmount').value = '';
+    }).catch(error => {
+        alert("Error adding data: " + error.message);
+    });
 }
 
 function addCrewMember() {
     const name = document.getElementById('newMemberName').value;
-    if (name) {
-        firebase.database().ref('crewMembers').push({
-            name: name,
-            level: 1,
-            rank: "Member"
-        }).then(() => {
-            alert(`Added new crew member: ${name}`);
-        });
+    const level = document.getElementById('newMemberLevel').value || 1;
+    const rank = document.getElementById('newMemberRank').value || "Member";
+
+    if (!name) {
+        alert('Please enter at least a name');
+        return;
     }
+
+    firebase.database().ref('crewMembers').push({
+        name: name,
+        level: level,
+        rank: rank,
+        image: "assets/images/default.png", // Default image
+        joinedAt: new Date().toISOString()
+    }).then(() => {
+        alert(`Added new crew member: ${name}`);
+        // Clear inputs
+        document.getElementById('newMemberName').value = '';
+        document.getElementById('newMemberLevel').value = '';
+        document.getElementById('newMemberRank').value = '';
+    }).catch(error => {
+        alert("Error adding member: " + error.message);
+    });
 }
 
 function resetData() {
@@ -149,6 +177,11 @@ function updateCrewStats() {
     const progress = document.getElementById('adminProgressInput').value;
     const xp = document.getElementById('adminXPInput').value;
 
+    if (!level || !progress || !xp) {
+        alert('Please fill all fields');
+        return;
+    }
+
     firebase.database().ref('crewData').set({
         level: level,
         progress: progress,
@@ -157,6 +190,8 @@ function updateCrewStats() {
     }).then(() => {
         alert("Data saved for all users!");
         closeAdminPanel();
+    }).catch(error => {
+        alert("Error saving data: " + error.message);
     });
 }
 
