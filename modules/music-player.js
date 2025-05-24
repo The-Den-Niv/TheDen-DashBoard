@@ -205,7 +205,8 @@ class MusicPlayer {
     }
 
     togglePlayer() {
-        this.elements.playerContainer?.classList.toggle('active');
+        this.elements.playerContainer.classList.toggle('active');
+        console.log('Player toggled'); // Debug line
     }
 }
 
