@@ -17,10 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize other components
     initChart();
     loadData();
-    
+
+    const player = new MusicPlayer();
     // Initialize music player with proper event binding
     const musicToggle = document.querySelector('.music-toggle');
-    const musicPlayer = new MusicPlayer();
+    const player = new MusicPlayer();
     
     // Manual event binding if automatic isn't working
     musicToggle.addEventListener('click', () => {
