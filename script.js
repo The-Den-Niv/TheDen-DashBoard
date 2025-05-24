@@ -116,23 +116,26 @@ function updateUI() {
     balanceChart.update();
   }
 
-  // Update Crew Members
+  // Update Crew Members - Fixed implementation
   const membersContainer = document.querySelector('.crew-members-horizontal');
   if (membersContainer) {
     membersContainer.innerHTML = appData.crewMembers.map(member => {
-      // Handle image paths
-      let imagePath = member.image || 'default.png';
+      // Handle image paths - IMPORTANT FIXES HERE
+      let imageFile = member.image || 'default.png';
       
-      // Remove any leading slashes or incorrect paths
-      imagePath = imagePath.replace(/^\/|\.\//g, '');
+      // Remove any leading/trailing slashes
+      imageFile = imageFile.replace(/^\/|\/$/g, '');
+      
+      // Create full image path
+      const imagePath = `ProfilePics/${imageFile}`;
       
       return `
         <div class="member-card">
           <img class="profile-img" 
-               src="ProfilePics/${imagePath}" 
-               onerror="this.onerror=null;this.src='ProfilePics/default.png'"
+               src="${imagePath}" 
+               onerror="handleImageError(this)"
                alt="${member.name}">
-            <div class="member-info">
+          <div class="member-info">
             <div class="member-level">Level ${member.level}</div>
             <h3 class="member-name">${member.name}</h3>
             <div class="member-rank">${member.rank}</div>
@@ -141,6 +144,16 @@ function updateUI() {
       `;
     }).join('');
   }
+}
+
+// Add this new function to handle image errors
+function handleImageError(img) {
+  console.warn('Failed to load image:', img.src);
+  img.onerror = null; // Prevent infinite loop
+  img.src = 'ProfilePics/default.png';
+  
+  // Add timestamp to bypass cache if needed
+  img.src = img.src + '?t=' + Date.now();
 }
 
 // ===== NAVIGATION ===== //
