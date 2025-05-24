@@ -6,6 +6,8 @@ class MusicPlayer {
         this.isPlaying = false;
         this.isRepeat = false;
         this.volume = 0.7;
+        this.isMuted = false;
+        this.preMuteVolume = 0.7;
         
         this.initElements();
         this.initEvents();
@@ -28,7 +30,9 @@ class MusicPlayer {
             trackTitle: document.querySelector('.song-title'),
             trackArtist: document.querySelector('.artist'),
             trackArt: document.querySelector('.album-art'),
-            closePlayer: document.querySelector('.close-player')
+            closePlayer: document.querySelector('.close-player'),
+            volumeBtn: document.querySelector('.volume-btn'),
+            volumeSlider: document.querySelector('.volume-slider')
         };
     }
 
@@ -51,31 +55,68 @@ class MusicPlayer {
     }
 
     loadTrack(index) {
-        if (index < 0 || index >= this.tracks.length) return;
-        
-        this.currentTrack = index;
-        const track = this.tracks[index];
-        this.audio.src = track.src;
-        this.elements.trackArt.src = track.art;
-        this.elements.trackTitle.textContent = track.title;
-        this.elements.trackArtist.textContent = track.artist;
-        
-        // Reset progress when loading new track
-        this.elements.progressBar.style.width = '0%';
-        this.elements.currentTime.textContent = '0:00';
-        
-        // Update duration when metadata is loaded
-        this.audio.onloadedmetadata = () => {
-            this.elements.duration.textContent = this.formatTime(this.audio.duration);
-        };
-    }
+    if (index < 0 || index >= this.tracks.length) return;
+    
+    this.currentTrack = index;
+    const track = this.tracks[index];
+    this.audio.src = track.src;
+    this.elements.trackArt.src = track.art;
+    this.elements.trackTitle.textContent = track.title;
+    this.elements.trackArtist.textContent = track.artist;
+    
+    // Reset progress and volume when loading new track
+    this.elements.progressBar.style.width = '0%';
+    this.elements.currentTime.textContent = '0:00';
+    this.audio.volume = this.isMuted ? 0 : this.volume;
+    
+    // Update duration when metadata is loaded
+    this.audio.onloadedmetadata = () => {
+        this.elements.duration.textContent = this.formatTime(this.audio.duration);
+    };
+}
 
     setupAudioListeners() {
         this.audio.addEventListener('timeupdate', () => this.updateProgress());
         this.audio.addEventListener('ended', () => this.nextTrack());
+        // Set initial volume
         this.audio.volume = this.volume;
+        this.elements.volumeSlider.value = this.volume;
     }
 
+     // Add these new methods:
+    toggleMute() {
+        this.isMuted = !this.isMuted;
+        
+        if (this.isMuted) {
+            this.preMuteVolume = this.audio.volume;
+            this.audio.volume = 0;
+            this.elements.volumeSlider.value = 0;
+            this.elements.volumeBtn.classList.add('muted');
+            this.elements.volumeBtn.textContent = '🔇'; // Muted icon
+        } else {
+            this.audio.volume = this.preMuteVolume;
+            this.elements.volumeSlider.value = this.preMuteVolume;
+            this.elements.volumeBtn.classList.remove('muted');
+            this.elements.volumeBtn.textContent = '🔊'; // Unmuted icon
+        }
+    }
+
+    setVolume(volume) {
+        this.volume = volume;
+        this.audio.volume = volume;
+        
+        // Update mute state if volume changes
+        if (volume > 0 && this.isMuted) {
+            this.isMuted = false;
+            this.elements.volumeBtn.classList.remove('muted');
+            this.elements.volumeBtn.textContent = '🔊';
+        } else if (volume === 0 && !this.isMuted) {
+            this.isMuted = true;
+            this.elements.volumeBtn.classList.add('muted');
+            this.elements.volumeBtn.textContent = '🔇';
+        }
+    }
+    
     togglePlay() {
         if (this.isPlaying) {
             this.audio.pause();
@@ -164,6 +205,8 @@ class MusicPlayer {
         this.elements.repeatBtn?.addEventListener('click', () => this.toggleRepeat());
         this.elements.progressContainer?.addEventListener('click', (e) => this.setProgress(e));
         this.elements.closePlayer?.addEventListener('click', () => this.togglePlayer());
+        this.elements.volumeBtn?.addEventListener('click', () => this.toggleMute());
+        this.elements.volumeSlider?.addEventListener('input', (e) => {this.setVolume(parseFloat(e.target.value));
     }
 
     togglePlayer() {
