@@ -91,17 +91,19 @@ main {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.1);
     text-align: center;
-    height: 400px; /* Added missing 'px' */
-    display: flex; /* Add this */
-    flex-direction: column; /* Add this */
-    justify-content: center; /* Add this */
+    height: 400px;
+    display: flex; /* Add flexbox */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    position: relative; /* For absolute positioning of children */
 }
 
 .progress-container {
     width: 180px;
     height: 180px;
-    margin: 1.5rem auto; /* Adjust margin */
     position: relative;
+    margin: 1rem 0; /* Adjust vertical margin */
 }
 
 .progress-ring {
@@ -113,19 +115,20 @@ main {
         rgba(144,144,144,0.1) 0
     );
     mask: radial-gradient(transparent 65%, #000 66%);
-    position: absolute;
 }
 
 .level-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     font-size: 3.5rem;
     color: #ececec;
     font-weight: bold;
     text-shadow: 0 0 15px rgba(192,192,192,0.4);
-    position: relative;
-    z-index: 2;
-    margin: 0 auto; /* Center horizontally */
-    width: fit-content; /* Add this */
     animation: level-glow 8s ease-in-out infinite;
+    width: 100%; /* Ensure full width for centering */
+    text-align: center; /* Center the number */
 }
 
 @keyframes level-glow {
@@ -142,6 +145,11 @@ main {
         text-shadow: 0 0 10px rgba(160,160,160,0.8),
                      0 0 20px rgba(160,160,160,0.6);
     }
+}
+
+.xp-total {
+    margin-top: 1rem;
+    font-size: 1.1rem;
 }
 
 /* Crew Members Section */
