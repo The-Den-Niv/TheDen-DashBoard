@@ -201,7 +201,7 @@ function addCrewMember() {
         name: name,
         level: level,
         rank: rank,
-        image: "assets/images/default.png",
+        image: "",
         joinedAt: new Date().toISOString()
     });
     
