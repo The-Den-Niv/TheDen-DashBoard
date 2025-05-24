@@ -1,110 +1,27 @@
 // ===== DATA MANAGEMENT ===== //
-let appData = {
-  crewData: {  // Changed back to crewData to match JSON
+const appData = {
+  crewData: {
     level: 0,
     progress: 0,
     xp: 0
   },
-  chartData: [],  // Changed back to chartData to match JSON
+  chartData: [],
   crewMembers: []
 };
 
-// Load data from JSON file
-async function loadData() {
-  try {
-    const response = await fetch('data.json?t=' + new Date().getTime()); // Cache busting
-    if (!response.ok) throw new Error('HTTP error');
-    
-    const jsonData = await response.json();
-    
-    // Update crew stats with validation
-    if (jsonData.crewData) {
-      appData.crewData = {
-        level: Number(jsonData.crewData.level) || 0,
-        progress: Math.min(100, Math.max(0, Number(jsonData.crewData.progress)) || 0,
-        xp: Number(jsonData.crewData.xp) || 0
-      };
-    }
-    
-    // Update chart data with validation
-    if (Array.isArray(jsonData.chartData)) {
-      appData.chartData = jsonData.chartData
-        .filter(item => item.date && !isNaN(item.amount))
-        .map(item => ({
-          date: item.date,
-          amount: Number(item.amount)
-        }));
-    }
-    
-    // Update crew members with validation
-    if (Array.isArray(jsonData.crewMembers)) {
-      appData.crewMembers = jsonData.crewMembers.map(member => ({
-        name: member.name || 'Unknown',
-        level: Number(member.level) || 1,
-        rank: member.rank || 'Member',
-        image: member.image || 'assets/images/default.png'
-      }));
-    }
-    
-    updateUI();
-    console.log('Data loaded successfully:', appData);
-  } catch (error) {
-    console.error('Data loading failed:', error);
-  }
-}
+// Chart instance
+let balanceChart;
 
-// ===== UI UPDATE FUNCTION ===== //
-function updateUI() {
-  // Crew Stats
-  document.querySelector('.level-display').textContent = appData.crewData.level;
-  document.querySelector('.xp-total').textContent = `Total XP: ${appData.crewData.xp.toLocaleString()}`;
-  
-  const progressRing = document.querySelector('.progress-ring');
-  progressRing.style.background = `conic-gradient(
-    #909090 ${appData.crewData.progress}%,
-    rgba(144,144,144,0.1) 0
-  )`
+// ===== INITIALIZATION ===== //
+document.addEventListener('DOMContentLoaded', () => {
+  initChart();
+  loadData();
+});
 
-  // Chart Data
-  if (window.chart) {
-    window.chart.data.labels = appData.chartData.map(item => item.date);
-    window.chart.data.datasets[0].data = appData.chartData.map(item => item.amount);
-    window.chart.update();
-  }
-
-
-   // Update Crew Members
-  const membersContainer = document.querySelector('.crew-members-horizontal');
-  if (membersContainer && appData.crewMembers) {
-    membersContainer.innerHTML = appData.crewMembers.map(member => {
-      // Fix image path handling
-      let imagePath = member.image;
-      if (!imagePath) imagePath = 'default.png';
-      if (!imagePath.includes('.')) imagePath += '.png';
-      
-      return `
-        <div class="member-card">
-          <img class="profile-img" 
-               src="ProfilePics/${imagePath}" 
-               onerror="this.onerror=null;this.src='ProfilePics/default.png'"
-               alt="${member.name}">
-          <div class="member-info">
-            <div class="member-level">Level ${member.level}</div>
-            <h3 class="member-name">${member.name}</h3>
-            <div class="member-rank">${member.rank}</div>
-          </div>
-        </div>
-      `;
-    }).join('');
-  }
-}
-
-// Initialize chart with empty data
-let chart;
-
+// ===== CHART FUNCTIONS ===== //
 function initChart() {
   const ctx = document.getElementById('balanceChart').getContext('2d');
-  chart = new Chart(ctx, {
+  balanceChart = new Chart(ctx, {
     type: 'line',
     data: {
       labels: [],
@@ -138,45 +55,98 @@ function initChart() {
   });
 }
 
-// Update this in your loadData function:
+// ===== DATA LOADING ===== //
 async function loadData() {
   try {
-    const response = await fetch('data.json?t=' + new Date().getTime());
-    const data = await response.json();
-    
-    // Process chart data
-    if (data.chartData && Array.isArray(data.chartData)) {
-      const sortedData = data.chartData.sort((a, b) => new Date(a.date) - new Date(b.date));
-      chart.data.labels = sortedData.map(item => item.date);
-      chart.data.datasets[0].data = sortedData.map(item => item.amount);
-      chart.update();
+    const response = await fetch('data.json');
+    if (!response.ok) throw new Error('Failed to load data');
+    const jsonData = await response.json();
+
+    // Update crew stats
+    if (jsonData.crewData) {
+      appData.crewData = {
+        level: Number(jsonData.crewData.level) || 0,
+        progress: Math.min(100, Math.max(0, Number(jsonData.crewData.progress))) || 0,
+        xp: Number(jsonData.crewData.xp) || 0
+      };
     }
-    
-    // Rest of your data loading...
+
+    // Update chart data
+    if (Array.isArray(jsonData.chartData)) {
+      appData.chartData = jsonData.chartData
+        .filter(item => item.date && !isNaN(item.amount))
+        .map(item => ({
+          date: item.date,
+          amount: Number(item.amount)
+        }));
+    }
+
+    // Update crew members
+    if (Array.isArray(jsonData.crewMembers)) {
+      appData.crewMembers = jsonData.crewMembers.map(member => ({
+        name: member.name || 'Unknown',
+        level: Number(member.level) || 1,
+        rank: member.rank || 'Member',
+        image: member.image || 'default.png'
+      }));
+    }
+
+    updateUI();
   } catch (error) {
-    console.error("Error loading data:", error);
+    console.error('Error loading data:', error);
   }
 }
 
-// Initialize chart when DOM loads
-document.addEventListener('DOMContentLoaded', () => {
-  initChart();
-  loadData();
-});
+// ===== UI UPDATES ===== //
+function updateUI() {
+  // Update Crew Stats
+  document.querySelector('.level-display').textContent = appData.crewData.level;
+  document.querySelector('.xp-total').textContent = `Total XP: ${appData.crewData.xp.toLocaleString()}`;
+  
+  const progressRing = document.querySelector('.progress-ring');
+  progressRing.style.background = `conic-gradient(
+    #909090 ${appData.crewData.progress}%,
+    rgba(144,144,144,0.1) 0
+  )`;
 
-// ===== NAVIGATION FUNCTIONS ===== //
-function toggleNav() {
-    const nav = document.querySelector('.nav-dropdown');
-    nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+  // Update Chart
+  if (balanceChart) {
+    balanceChart.data.labels = appData.chartData.map(item => item.date);
+    balanceChart.data.datasets[0].data = appData.chartData.map(item => item.amount);
+    balanceChart.update();
+  }
+
+  // Update Crew Members
+  const membersContainer = document.querySelector('.crew-members-horizontal');
+  if (membersContainer) {
+    membersContainer.innerHTML = appData.crewMembers.map(member => `
+      <div class="member-card">
+        <img class="profile-img" 
+             src="ProfilePics/${member.image}" 
+             onerror="this.src='ProfilePics/default.png'" 
+             alt="${member.name}">
+        <div class="member-info">
+          <div class="member-level">Level ${member.level}</div>
+          <h3 class="member-name">${member.name}</h3>
+          <div class="member-rank">${member.rank}</div>
+        </div>
+      </div>
+    `).join('');
+  }
 }
 
-document.addEventListener('click', function(event) {
-    const nav = document.querySelector('.nav-dropdown');
-    if (!event.target.closest('.nav-btn') && !event.target.closest('.nav-dropdown')) {
-        nav.style.display = 'none';
-    }
-});
+// ===== NAVIGATION ===== //
+function toggleNav() {
+  const nav = document.querySelector('.nav-dropdown');
+  nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+}
 
+document.addEventListener('click', (event) => {
+  const nav = document.querySelector('.nav-dropdown');
+  if (!event.target.closest('.nav-btn') && !event.target.closest('.nav-dropdown')) {
+    nav.style.display = 'none';
+  }
+});
 // ===== ADMIN PANEL FUNCTIONS ===== //
 const ADMIN_PASSWORD = "crew123";
 
