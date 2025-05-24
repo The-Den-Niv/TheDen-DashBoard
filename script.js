@@ -112,10 +112,7 @@ function updateUI() {
     
     const progressRing = document.querySelector('.progress-ring');
     if (progressRing) {
-        progressRing.style.background = `conic-gradient(
-            #909090 ${appData.crewData.progress}%,
-            rgba(144,144,144,0.1) 0
-        )`;
+        progressRing.style.background = `conic-gradient(#909090 ${appData.crewData.progress}%, rgba(144,144,144,0.1) 0)`;
     }
 
     // Update Chart
