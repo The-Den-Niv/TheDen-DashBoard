@@ -91,17 +91,17 @@ main {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.1);
     text-align: center;
-    height: 400;
+    height: 400px; /* Added missing 'px' */
+    display: flex; /* Add this */
+    flex-direction: column; /* Add this */
+    justify-content: center; /* Add this */
 }
 
 .progress-container {
     width: 180px;
     height: 180px;
-    margin: 0 auto 1.5rem; /* Centers horizontally */
+    margin: 1.5rem auto; /* Adjust margin */
     position: relative;
-    display: flex; /* Added for better centering */
-    align-items: center; /* Vertical center */
-    justify-content: center; /* Horizontal center */
 }
 
 .progress-ring {
@@ -113,19 +113,18 @@ main {
         rgba(144,144,144,0.1) 0
     );
     mask: radial-gradient(transparent 65%, #000 66%);
-    position: absolute; /* Changed from default */
+    position: absolute;
 }
-
 
 .level-display {
     font-size: 3.5rem;
     color: #ececec;
     font-weight: bold;
     text-shadow: 0 0 15px rgba(192,192,192,0.4);
-    z-index: 2; /* Ensure it's above the ring */
-    position: relative; /* Changed from absolute */
-    
-    /* Breathing glow animation */
+    position: relative;
+    z-index: 2;
+    margin: 0 auto; /* Center horizontally */
+    width: fit-content; /* Add this */
     animation: level-glow 8s ease-in-out infinite;
 }
 
