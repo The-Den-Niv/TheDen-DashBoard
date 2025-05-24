@@ -110,9 +110,9 @@ function updateUI() {
     document.querySelector('.level-display').textContent = appData.crewData.level;
     document.querySelector('.xp-total').textContent = `Total XP: ${appData.crewData.xp.toLocaleString()}`;
     
-    const progressRing = document.querySelector('.progress-ring');
+    const progressRing = document.querySelector('.crew-level .progress-ring');
     if (progressRing) {
-        progressRing.style.background = `conic-gradient(#909090 ${appData.crewData.progress}%, rgba(144,144,144,0.1) 0)`;
+        progressRing.style.setProperty('--progress', `${appData.crewData.progress}%`);
     }
 
     // Update Chart
