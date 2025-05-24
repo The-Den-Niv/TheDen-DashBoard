@@ -55,36 +55,32 @@ async function loadData() {
 
 // ===== UI UPDATE FUNCTION ===== //
 function updateUI() {
-  // Update Crew Stats
-  const levelElement = document.querySelector('.level-display');
-  const xpElement = document.querySelector('.xp-total');
-  const progressRing = document.querySelector('.progress-ring');
+  // Crew Stats
+  document.querySelector('.level-display').textContent = appData.crewData.level;
+  document.querySelector('.xp-total').textContent = `Total XP: ${appData.crewData.xp.toLocaleString()}`;
   
-  if (levelElement) levelElement.textContent = appData.crewData.level;
-  if (xpElement) xpElement.textContent = `Total XP: ${appData.crewData.xp.toLocaleString()}`;
-  if (progressRing) {
-    progressRing.style.background = `conic-gradient(
-      #909090 ${appData.crewData.progress}%,
-      rgba(144,144,144,0.1) 0
-    )`;
-  }
+  const progressRing = document.querySelector('.progress-ring');
+  progressRing.style.background = `conic-gradient(
+    #909090 ${appData.crewData.progress}%,
+    rgba(144,144,144,0.1) 0
+  )`
 
-  // Update Balance Chart
-  if (window.chart && appData.chartData) {
+  // Chart Data
+  if (window.chart) {
     window.chart.data.labels = appData.chartData.map(item => item.date);
     window.chart.data.datasets[0].data = appData.chartData.map(item => item.amount);
     window.chart.update();
   }
 
 
-  // Update Crew Members
+  // Crew Members
   const membersContainer = document.querySelector('.crew-members-horizontal');
   if (membersContainer) {
     membersContainer.innerHTML = appData.crewMembers.map(member => `
       <div class="member-card">
         <img class="profile-img" 
-             src="${member.image.startsWith('http') ? member.image : 'assets/images/' + member.image}" 
-             onerror="this.src='assets/images/default.png'" 
+             src="ProfilePics/${member.image}" 
+             onerror="this.src='ProfilePics/default.png'" 
              alt="${member.name}">
         <div class="member-info">
           <div class="member-level">Level ${member.level}</div>
