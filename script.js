@@ -73,59 +73,95 @@ function updateUI() {
   }
 
 
-  // Crew Members
+   // Update Crew Members
   const membersContainer = document.querySelector('.crew-members-horizontal');
-  if (membersContainer) {
-    membersContainer.innerHTML = appData.crewMembers.map(member => `
-      <div class="member-card">
-        <img class="profile-img" 
-             src="ProfilePics/${member.image}" 
-             onerror="this.src='ProfilePics/default.png'" 
-             alt="${member.name}">
-        <div class="member-info">
-          <div class="member-level">Level ${member.level}</div>
-          <h3 class="member-name">${member.name}</h3>
-          <div class="member-rank">${member.rank}</div>
+  if (membersContainer && appData.crewMembers) {
+    membersContainer.innerHTML = appData.crewMembers.map(member => {
+      // Fix image path handling
+      let imagePath = member.image;
+      if (!imagePath) imagePath = 'default.png';
+      if (!imagePath.includes('.')) imagePath += '.png';
+      
+      return `
+        <div class="member-card">
+          <img class="profile-img" 
+               src="ProfilePics/${imagePath}" 
+               onerror="this.onerror=null;this.src='ProfilePics/default.png'"
+               alt="${member.name}">
+          <div class="member-info">
+            <div class="member-level">Level ${member.level}</div>
+            <h3 class="member-name">${member.name}</h3>
+            <div class="member-rank">${member.rank}</div>
+          </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 }
 
-// ===== CHART INITIALIZATION ===== //
-const ctx = document.getElementById('balanceChart').getContext('2d');
-const chart = new Chart(ctx, {
+// Initialize chart with empty data
+let chart;
+
+function initChart() {
+  const ctx = document.getElementById('balanceChart').getContext('2d');
+  chart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: [],
-        datasets: [{
-            label: 'Crew Balance ($)',
-            data: [],
-            borderColor: '#c0c0c0',
-            borderWidth: 2,
-            pointBackgroundColor: '#2b2b2b',
-            pointBorderColor: '#c0c0c0',
-            tension: 0.4,
-            fill: {
-                target: 'origin',
-                above: 'rgba(192,192,192,0.1)'
-            }
-        }]
+      labels: [],
+      datasets: [{
+        label: 'Crew Balance ($)',
+        data: [],
+        borderColor: '#c0c0c0',
+        borderWidth: 2,
+        tension: 0.4,
+        fill: {
+          target: 'origin',
+          above: 'rgba(192,192,192,0.1)'
+        }
+      }]
     },
     options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            y: {
-                grid: { color: 'rgba(192,192,192,0.1)' },
-                ticks: { color: '#c0c0c0' }
-            },
-            x: {
-                grid: { color: 'rgba(192,192,192,0.1)' },
-                ticks: { color: '#c0c0c0' }
-            }
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: false,
+          grid: { color: 'rgba(192,192,192,0.1)' },
+          ticks: { color: '#c0c0c0' }
+        },
+        x: {
+          grid: { color: 'rgba(192,192,192,0.1)' },
+          ticks: { color: '#c0c0c0' }
         }
+      }
     }
+  });
+}
+
+// Update this in your loadData function:
+async function loadData() {
+  try {
+    const response = await fetch('data.json?t=' + new Date().getTime());
+    const data = await response.json();
+    
+    // Process chart data
+    if (data.chartData && Array.isArray(data.chartData)) {
+      const sortedData = data.chartData.sort((a, b) => new Date(a.date) - new Date(b.date));
+      chart.data.labels = sortedData.map(item => item.date);
+      chart.data.datasets[0].data = sortedData.map(item => item.amount);
+      chart.update();
+    }
+    
+    // Rest of your data loading...
+  } catch (error) {
+    console.error("Error loading data:", error);
+  }
+}
+
+// Initialize chart when DOM loads
+document.addEventListener('DOMContentLoaded', () => {
+  initChart();
+  loadData();
 });
 
 // ===== NAVIGATION FUNCTIONS ===== //
