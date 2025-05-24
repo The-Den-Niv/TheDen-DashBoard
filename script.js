@@ -1,5 +1,9 @@
 // ===== DATA MANAGEMENT ===== //
-let appData = {};
+let appData = {
+  crewData: {},
+  chartData: [],
+  crewMembers: []
+};
 
 // Load data from JSON file
 async function loadData() {
@@ -7,6 +11,17 @@ async function loadData() {
     const response = await fetch('data.json');
     if (!response.ok) throw new Error('Failed to load data');
     appData = await response.json();
+    
+    // Ensure all crew members have required fields
+    if (appData.crewMembers) {
+      appData.crewMembers = appData.crewMembers.map(member => ({
+        name: member.name || 'Unknown',
+        level: member.level || 1,
+        rank: member.rank || 'Member',
+        image: member.image || 'assets/images/default.png'
+      }));
+    }
+    
     updateUI();
   } catch (error) {
     console.error('Error loading data:', error);
@@ -14,54 +29,58 @@ async function loadData() {
   }
 }
 
-// Save data to JSON file (simulated - would need server-side in real implementation)
-async function saveData() {
-  // In a real app, you would send this to a server endpoint
-  console.log('Data would be saved here:', appData);
-  alert('Note: In a real implementation, this would save to your server');
-}
-
 // ===== UI UPDATE FUNCTION ===== //
 function updateUI() {
-  if (!appData.crewData || !appData.chartData || !appData.crewMembers) {
-    console.error('Incomplete data structure');
-    return;
+  // Update Crew Stats
+  if (appData.crewData) {
+    document.querySelector('.level-display').textContent = appData.crewData.level || '0';
+    const progress = appData.crewData.progress || 0;
+    const progressRing = document.querySelector('.progress-ring');
+    progressRing.style.background = `conic-gradient(
+      #909090 ${progress}%,
+      rgba(144,144,144,0.1) 0
+    )`;
+    document.querySelector('.xp-total').textContent = 
+      `Total XP: ${parseInt(appData.crewData.xp || 0).toLocaleString()}`;
   }
 
-  // Update Crew Stats
-  const crewData = appData.crewData;
-  document.querySelector('.level-display').textContent = crewData.level;
-  const progressRing = document.querySelector('.progress-ring');
-  progressRing.style.background = `conic-gradient(
-      #909090 ${crewData.progress}%,
-      rgba(144,144,144,0.1) 0
-  )`;
-  document.querySelector('.xp-total').textContent = 
-      `Total XP: ${parseInt(crewData.xp).toLocaleString()}`;
-
   // Update Chart Data
-  const labels = appData.chartData.map(item => item.date);
-  const amounts = appData.chartData.map(item => item.amount);
-  chart.data.labels = labels;
-  chart.data.datasets[0].data = amounts;
-  chart.update();
+  if (appData.chartData) {
+    const labels = appData.chartData.map(item => item.date);
+    const amounts = appData.chartData.map(item => item.amount);
+    chart.data.labels = labels;
+    chart.data.datasets[0].data = amounts;
+    chart.update();
+  }
 
-  // Update Crew Members
-  const membersContainer = document.querySelector('.crew-members-horizontal');
-  membersContainer.innerHTML = '';
-  appData.crewMembers.forEach(member => {
+  // Update Crew Members - Fixed implementation
+  if (appData.crewMembers) {
+    const membersContainer = document.querySelector('.crew-members-horizontal');
+    membersContainer.innerHTML = '';
+    
+    appData.crewMembers.forEach(member => {
       const memberCard = document.createElement('div');
       memberCard.className = 'member-card';
+      
+      // Ensure image path is correct
+      let imagePath = member.image;
+      if (!imagePath.startsWith('http') && !imagePath.startsWith('assets/')) {
+        imagePath = 'assets/images/' + imagePath;
+      }
+      
       memberCard.innerHTML = `
-          <img class="profile-img" src="${member.image || 'assets/images/default.png'}" alt="${member.name}">
-          <div class="member-info">
-              <div class="member-level">Level ${member.level}</div>
-              <h3 class="member-name">${member.name}</h3>
-              <div class="member-rank">${member.rank}</div>
-          </div>
+        <img class="profile-img" src="${imagePath}" 
+             onerror="this.src='assets/images/default.png'" 
+             alt="${member.name}">
+        <div class="member-info">
+          <div class="member-level">Level ${member.level}</div>
+          <h3 class="member-name">${member.name}</h3>
+          <div class="member-rank">${member.rank}</div>
+        </div>
       `;
       membersContainer.appendChild(memberCard);
-  });
+    });
+  }
 }
 
 // ===== CHART INITIALIZATION ===== //
