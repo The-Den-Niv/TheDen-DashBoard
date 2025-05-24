@@ -284,6 +284,5 @@ function updateCrewStats() {
 }
 
 // ===== INITIALIZE APP ===== //
-document.addEventListener('DOMContentLoaded', function() {
-    loadData(); // Load data from data.json when page loads
+document.addEventListener('DOMContentLoaded', loadData);
 });
