@@ -1,86 +1,89 @@
 // ===== DATA MANAGEMENT ===== //
 let appData = {
-  crewStats: {  // Changed from crewData to crewStats for consistency
+  crewData: {  // Changed back to crewData to match JSON
     level: 0,
     progress: 0,
     xp: 0
   },
-  balanceHistory: [],  // Changed from chartData to balanceHistory
+  chartData: [],  // Changed back to chartData to match JSON
   crewMembers: []
 };
 
 // Load data from JSON file
 async function loadData() {
   try {
-    const response = await fetch('data.json');
-    if (!response.ok) throw new Error('Failed to load data');
-    const loadedData = await response.json();
+    const response = await fetch('data.json?t=' + new Date().getTime()); // Cache busting
+    if (!response.ok) throw new Error('HTTP error');
     
-    // Merge loaded data with defaults
-    appData = {
-      crewStats: {
-        level: loadedData.crewStats?.level || 0,
-        progress: loadedData.crewStats?.progress || 0,
-        xp: loadedData.crewStats?.xp || 0
-      },
-      balanceHistory: loadedData.balanceHistory || [],
-      crewMembers: loadedData.crewMembers || []
-    };
+    const jsonData = await response.json();
     
-    // Ensure all crew members have required fields
-    appData.crewMembers = appData.crewMembers.map(member => ({
-      name: member.name || 'Unknown',
-      level: member.level || 1,
-      rank: member.rank || 'Member',
-      image: member.image || 'assets/images/default.png'
-    }));
+    // Update crew stats with validation
+    if (jsonData.crewData) {
+      appData.crewData = {
+        level: Number(jsonData.crewData.level) || 0,
+        progress: Math.min(100, Math.max(0, Number(jsonData.crewData.progress)) || 0,
+        xp: Number(jsonData.crewData.xp) || 0
+      };
+    }
+    
+    // Update chart data with validation
+    if (Array.isArray(jsonData.chartData)) {
+      appData.chartData = jsonData.chartData
+        .filter(item => item.date && !isNaN(item.amount))
+        .map(item => ({
+          date: item.date,
+          amount: Number(item.amount)
+        }));
+    }
+    
+    // Update crew members with validation
+    if (Array.isArray(jsonData.crewMembers)) {
+      appData.crewMembers = jsonData.crewMembers.map(member => ({
+        name: member.name || 'Unknown',
+        level: Number(member.level) || 1,
+        rank: member.rank || 'Member',
+        image: member.image || 'assets/images/default.png'
+      }));
+    }
     
     updateUI();
+    console.log('Data loaded successfully:', appData);
   } catch (error) {
-    console.error('Error loading data:', error);
+    console.error('Data loading failed:', error);
   }
 }
 
 // ===== UI UPDATE FUNCTION ===== //
 function updateUI() {
   // Update Crew Stats
-  if (appData.crewData) {
-    document.querySelector('.level-display').textContent = appData.crewData.level || '0';
-    const progress = appData.crewData.progress || 0;
-    const progressRing = document.querySelector('.progress-ring');
+  const levelElement = document.querySelector('.level-display');
+  const xpElement = document.querySelector('.xp-total');
+  const progressRing = document.querySelector('.progress-ring');
+  
+  if (levelElement) levelElement.textContent = appData.crewData.level;
+  if (xpElement) xpElement.textContent = `Total XP: ${appData.crewData.xp.toLocaleString()}`;
+  if (progressRing) {
     progressRing.style.background = `conic-gradient(
-      #909090 ${progress}%,
+      #909090 ${appData.crewData.progress}%,
       rgba(144,144,144,0.1) 0
     )`;
-    document.querySelector('.xp-total').textContent = 
-      `Total XP: ${parseInt(appData.crewData.xp || 0).toLocaleString()}`;
   }
 
-  // Update Chart Data
-  if (appData.chartData) {
-    const labels = appData.chartData.map(item => item.date);
-    const amounts = appData.chartData.map(item => item.amount);
-    chart.data.labels = labels;
-    chart.data.datasets[0].data = amounts;
-    chart.update();
+  // Update Balance Chart
+  if (window.chart && appData.chartData) {
+    window.chart.data.labels = appData.chartData.map(item => item.date);
+    window.chart.data.datasets[0].data = appData.chartData.map(item => item.amount);
+    window.chart.update();
   }
+
 
   // Update Crew Members
-  if (appData.crewMembers) {
-    const membersContainer = document.querySelector('.crew-members-horizontal');
-    membersContainer.innerHTML = '';
-    
-    appData.crewMembers.forEach(member => {
-      const memberCard = document.createElement('div');
-      memberCard.className = 'member-card';
-      
-      let imagePath = member.image;
-      if (!imagePath.startsWith('http') && !imagePath.startsWith('assets/')) {
-        imagePath = 'assets/images/' + imagePath;
-      }
-      
-      memberCard.innerHTML = `
-        <img class="profile-img" src="${imagePath}" 
+  const membersContainer = document.querySelector('.crew-members-horizontal');
+  if (membersContainer) {
+    membersContainer.innerHTML = appData.crewMembers.map(member => `
+      <div class="member-card">
+        <img class="profile-img" 
+             src="${member.image.startsWith('http') ? member.image : 'assets/images/' + member.image}" 
              onerror="this.src='assets/images/default.png'" 
              alt="${member.name}">
         <div class="member-info">
@@ -88,9 +91,8 @@ function updateUI() {
           <h3 class="member-name">${member.name}</h3>
           <div class="member-rank">${member.rank}</div>
         </div>
-      `;
-      membersContainer.appendChild(memberCard);
-    });
+      </div>
+    `).join('');
   }
 }
 
@@ -284,5 +286,44 @@ function updateCrewStats() {
 }
 
 // ===== INITIALIZE APP ===== //
-document.addEventListener('DOMContentLoaded', loadData);
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize chart
+  const ctx = document.getElementById('balanceChart')?.getContext('2d');
+  if (ctx) {
+    window.chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'Crew Balance ($)',
+          data: [],
+          borderColor: '#c0c0c0',
+          borderWidth: 2,
+          pointBackgroundColor: '#2b2b2b',
+          pointBorderColor: '#c0c0c0',
+          tension: 0.4,
+          fill: {
+            target: 'origin',
+            above: 'rgba(192,192,192,0.1)'
+          }
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            grid: { color: 'rgba(192,192,192,0.1)' },
+            ticks: { color: '#c0c0c0' }
+          },
+          x: {
+            grid: { color: 'rgba(192,192,192,0.1)' },
+            ticks: { color: '#c0c0c0' }
+          }
+        }
+      }
+    });
+  }
+  
+  loadData();
 });
