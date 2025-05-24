@@ -297,6 +297,37 @@ function updateCrewStats() {
     closeAdminPanel();
 }
 
+// Music Player Toggle
+const musicToggle = document.querySelector('.music-toggle');
+const musicPlayer = document.querySelector('.music-player');
+const closePlayer = document.querySelector('.close-player');
+
+// Toggle player visibility
+function toggleMusicPlayer() {
+  musicPlayer.classList.toggle('active');
+}
+
+musicToggle.addEventListener('click', toggleMusicPlayer);
+closePlayer.addEventListener('click', toggleMusicPlayer);
+
+// Close when clicking outside
+document.addEventListener('click', (e) => {
+  if (!musicPlayer.contains(e.target) && 
+      e.target !== musicToggle && 
+      !musicToggle.contains(e.target)) {
+    musicPlayer.classList.remove('active');
+  }
+});
+
+// When play is clicked
+playBtn.addEventListener('click', () => {
+  document.querySelector('.album-art').classList.toggle('playing');
+});
+
+// When song ends
+audio.addEventListener('ended', () => {
+  document.querySelector('.album-art').classList.remove('playing');
+});
 
 
 // ===== INITIALIZE APP ===== //
