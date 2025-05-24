@@ -116,33 +116,22 @@ function updateUI() {
     balanceChart.update();
   }
 
-  // Update Crew Members - Fixed implementation
+  // Update Crew Members - SIMPLIFIED VERSION
   const membersContainer = document.querySelector('.crew-members-horizontal');
   if (membersContainer) {
-    membersContainer.innerHTML = appData.crewMembers.map(member => {
-      // Handle image paths - IMPORTANT FIXES HERE
-      let imageFile = member.image || 'default.png';
-      
-      // Remove any leading/trailing slashes
-      imageFile = imageFile.replace(/^\/|\/$/g, '');
-      
-      // Create full image path
-      const imagePath = `ProfilePics/${imageFile}`;
-      
-      return `
-        <div class="member-card">
-          <img class="profile-img" 
-               src="ProfilePics/Niiv_PFP.png" 
-               onerror="handleImageError(this)"
-               alt="Niiv_">
-          <div class="member-info">
-            <div class="member-level">Level ${member.level}</div>
-            <h3 class="member-name">${member.name}</h3>
-            <div class="member-rank">${member.rank}</div>
-          </div>
+    membersContainer.innerHTML = appData.crewMembers.map(member => `
+      <div class="member-card">
+        <img class="profile-img" 
+             src="${member.image}" 
+             onerror="this.src='ProfilePics/default.png'"
+             alt="${member.name}">
+        <div class="member-info">
+          <div class="member-level">Level ${member.level}</div>
+          <h3 class="member-name">${member.name}</h3>
+          <div class="member-rank">${member.rank}</div>
         </div>
-      `;
-    }).join('');
+      </div>
+    `).join('');
   }
 }
 
