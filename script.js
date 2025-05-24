@@ -132,9 +132,9 @@ function updateUI() {
       return `
         <div class="member-card">
           <img class="profile-img" 
-               src="${imagePath}" 
+               src="ProfilePics/Niiv_PFP.png" 
                onerror="handleImageError(this)"
-               alt="${member.name}">
+               alt="Niiv_">
           <div class="member-info">
             <div class="member-level">Level ${member.level}</div>
             <h3 class="member-name">${member.name}</h3>
