@@ -297,6 +297,132 @@ function updateCrewStats() {
     closeAdminPanel();
 }
 
+
+// ===== MUSIC PLAYER FUNCTIONALITY ===== //
+document.addEventListener('DOMContentLoaded', () => {
+    // DOM Elements
+    const musicBtn = document.querySelector('.music-player-btn');
+    const playerPopup = document.querySelector('.music-player-popup');
+    const closeBtn = document.querySelector('.close-player');
+    const playBtn = document.querySelector('.play-btn');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const repeatBtn = document.querySelector('.repeat-btn');
+    const progressBar = document.querySelector('.progress-bar');
+    const currentTimeEl = document.querySelector('.current-time');
+    const durationEl = document.querySelector('.duration');
+    
+    // Player State
+    let audio = new Audio('assets/music.mp3');
+    let isPlaying = false;
+    let isRepeat = false;
+    let currentTrack = 0;
+    
+    const tracks = [
+        {
+            title: "Track 1",
+            artist: "Artist 1",
+            art: "assets/album-art1.jpg",
+            src: "assets/music1.mp3"
+        },
+        {
+            title: "Track 2", 
+            artist: "Artist 2",
+            art: "assets/album-art2.jpg",
+            src: "assets/music2.mp3"
+        }
+    ];
+    
+    // Functions
+    function togglePlayer() {
+        playerPopup.classList.toggle('active');
+    }
+    
+    function loadTrack() {
+        const track = tracks[currentTrack];
+        audio.src = track.src;
+        document.querySelector('.track-art').src = track.art;
+        document.querySelector('.track-title').textContent = track.title;
+        document.querySelector('.track-artist').textContent = track.artist;
+        
+        audio.addEventListener('loadedmetadata', () => {
+            durationEl.textContent = formatTime(audio.duration);
+        });
+    }
+    
+    function togglePlay() {
+        if (isPlaying) {
+            audio.pause();
+            playBtn.textContent = '⏵';
+        } else {
+            audio.play()
+                .then(() => {
+                    playBtn.textContent = '⏸';
+                    updateProgress();
+                })
+                .catch(e => console.error("Playback failed:", e));
+        }
+        isPlaying = !isPlaying;
+    }
+    
+    function updateProgress() {
+        if (isPlaying) {
+            requestAnimationFrame(updateProgress);
+            const progress = (audio.currentTime / audio.duration) * 100;
+            progressBar.style.setProperty('--progress', `${progress}%`);
+            currentTimeEl.textContent = formatTime(audio.currentTime);
+        }
+    }
+    
+    function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+    
+    function nextTrack() {
+        currentTrack = (currentTrack + 1) % tracks.length;
+        loadTrack();
+        if (isPlaying) audio.play();
+    }
+    
+    function prevTrack() {
+        currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+        loadTrack();
+        if (isPlaying) audio.play();
+    }
+    
+    function toggleRepeat() {
+        isRepeat = !isRepeat;
+        repeatBtn.style.color = isRepeat ? '#4CAF50' : 'white';
+        audio.loop = isRepeat;
+    }
+    
+    // Event Listeners
+    musicBtn.addEventListener('click', togglePlayer);
+    closeBtn.addEventListener('click', togglePlayer);
+    playBtn.addEventListener('click', togglePlay);
+    prevBtn.addEventListener('click', prevTrack);
+    nextBtn.addEventListener('click', nextTrack);
+    repeatBtn.addEventListener('click', toggleRepeat);
+    
+    progressBar.addEventListener('click', (e) => {
+        const percent = e.offsetX / progressBar.offsetWidth;
+        audio.currentTime = percent * audio.duration;
+    });
+    
+    audio.addEventListener('ended', () => {
+        if (!isRepeat) nextTrack();
+    });
+    
+    // Initialize
+    loadTrack();
+    
+    // CSS variable for progress bar
+    document.documentElement.style.setProperty('--progress', '0%');
+});
+
+
 // ===== INITIALIZE APP ===== //
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize chart
