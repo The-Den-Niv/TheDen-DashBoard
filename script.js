@@ -1,4 +1,4 @@
-// ===== DATA MANAGEMENT ===== // //test//
+// ===== DATA MANAGEMENT ===== //
 const appData = {
     crewData: {
         level: 0,
@@ -10,7 +10,6 @@ const appData = {
 };
 
 let balanceChart;
-let musicPlayer; // Will hold MusicPlayer instance
 
 // ===== INITIALIZATION ===== //
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initChart();
     loadData();
 
-    musicPlayer = new MusicPlayer();
 });
 
 // ===== CHART FUNCTIONS ===== //
