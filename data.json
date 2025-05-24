@@ -1,13 +1,12 @@
 {
-  "crewStats": {
-    "level": 42,
-    "progress": 84.84,
-    "xp": 1250000
+  "crewData": {
+    "level": 5,
+    "progress": 97.42,
+    "xp": 1840000
   },
-  "balanceHistory": [
-    {"date": "2025-22-05", "amount": 0},
-    {"date": "2025-23-05", "amount": 1960000}
-    
+  "chartData": [
+    {"date": "2025-05-22", "amount": 0},
+    {"date": "2025-05-23", "amount": 1960000}
   ],
   "crewMembers": [
     {
@@ -19,13 +18,14 @@
     {
       "name": "ComedySama",
       "level": 1,
-      "rank": "Member"
+      "rank": "Member",
+      "image": ""
     },
     {
       "name": "HunkyBlockGuy",
       "level": 1,
       "rank": "Member",
-    
+      "image": ""
     }
   ]
 }
