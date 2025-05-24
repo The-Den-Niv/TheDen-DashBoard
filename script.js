@@ -94,7 +94,7 @@ async function loadData() {
                 name: member.name || 'Unknown',
                 level: Number(member.level) || 1,
                 rank: member.rank || 'Member',
-                image: member.image || 'assets/images/default.png'
+                image: member.image || 'ProfilePics/default.png'
             }));
         }
 
@@ -132,7 +132,7 @@ function updateUI() {
             <div class="member-card">
                 <img class="profile-img" 
                      src="${member.image}" 
-                     onerror="this.src='assets/images/default.png'"
+                     onerror="this.src='ProfilePic/default.png'"
                      alt="${member.name}">
                 <div class="member-info">
                     <div class="member-level">Level ${member.level}</div>
