@@ -331,3 +331,39 @@ main {
     margin-bottom: 5px;
     color: #b0b0b0;
 }
+
+/* Audio Player Styles */
+.audio-player-container {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+}
+
+.header-audio {
+    width: 200px;
+    height: 40px;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.header-audio:hover {
+    opacity: 1;
+}
+
+/* Hide default controls on mobile */
+@media (max-width: 768px) {
+    .header-audio {
+        width: 30px;
+        overflow: hidden;
+    }
+    
+    .header-audio::-webkit-media-controls-panel {
+        display: none;
+    }
+    
+    .header-audio::-webkit-media-controls-play-button {
+        display: flex;
+    }
+}
