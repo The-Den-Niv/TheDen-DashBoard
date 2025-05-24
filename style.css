@@ -341,43 +341,27 @@ main {
     z-index: 100;
 }
 
-/* Modern dark theme audio player */
+/* Change the entire audio player color */
 .header-audio {
-    --player-accent: #4CAF50;
-    --player-bg: rgba(30, 30, 30, 0.9);
-    --player-controls: #c0c0c0;
-    
-    width: 200px;
-    height: 40px;
-    background: var(--player-bg);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    filter: invert(0.9) hue-rotate(180deg) brightness(1.2);
+    background: rgba(30, 30, 30, 0.8);
+    border-radius: 10px;
+    padding: 5px;
 }
 
-/* Chrome/Safari */
+/* For WebKit browsers (Chrome, Safari) */
 .header-audio::-webkit-media-controls-panel {
-    background: var(--player-bg);
+    background: rgba(30, 30, 30, 0.9);
+    border-radius: 5px;
 }
 
-.header-audio::-webkit-media-controls-play-button {
-    filter: invert(0.8);
-}
-
+.header-audio::-webkit-media-controls-play-button,
+.header-audio::-webkit-media-controls-mute-button,
+.header-audio::-webkit-media-controls-timeline,
 .header-audio::-webkit-media-controls-current-time-display,
 .header-audio::-webkit-media-controls-time-remaining-display {
-    color: var(--player-controls);
-    font-size: 0.8rem;
-}
-
-.header-audio::-webkit-media-controls-timeline {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 2px;
-    margin: 0 10px;
-}
-
-.header-audio::-webkit-media-controls-volume-slider {
-    background: var(--player-accent);
-    border-radius: 2px;
+    filter: invert(1);
+    color: white;
 }
 
 /* Hide default controls on mobile */
