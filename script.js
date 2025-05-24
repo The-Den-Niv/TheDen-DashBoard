@@ -18,15 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initChart();
     loadData();
 
-    const player = new MusicPlayer();
-    // Initialize music player with proper event binding
-    const musicToggle = document.querySelector('.music-toggle');
-    const player = new MusicPlayer();
-    
-    // Manual event binding if automatic isn't working
-    musicToggle.addEventListener('click', () => {
-        musicPlayer.togglePlayer();
-    });
+    musicPlayer = new MusicPlayer();
 });
 
 // ===== CHART FUNCTIONS ===== //
