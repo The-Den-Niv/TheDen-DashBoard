@@ -117,22 +117,17 @@ class MusicPlayer {
         }
     }
     
-    togglePlay() {
-        if (this.isPlaying) {
-            this.audio.pause();
-            this.elements.trackArt.classList.remove('playing');
-        } else {
-            this.audio.play()
-                .then(() => {
-                    this.elements.trackArt.classList.add('playing');
-                })
-                .catch(error => {
-                    console.error('Playback failed:', error);
-                });
-        }
-        this.isPlaying = !this.isPlaying;
-        this.updatePlayButton();
+   togglePlay() {
+    if (this.isPlaying) {
+        this.audio.pause();
+        this.elements.playerBtn.classList.remove('playing');
+    } else {
+        this.audio.play();
+        this.elements.playerBtn.classList.add('playing');
     }
+    this.isPlaying = !this.isPlaying;
+    this.updatePlayButton();
+}
 
     updatePlayButton() {
         const icon = this.isPlaying ? '❚❚' : '▶';
