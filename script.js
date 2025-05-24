@@ -14,11 +14,18 @@ let musicPlayer; // Will hold MusicPlayer instance
 
 // ===== INITIALIZATION ===== //
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize other components
     initChart();
     loadData();
     
-    // Initialize music player
-    musicPlayer = new MusicPlayer();
+    // Initialize music player with proper event binding
+    const musicToggle = document.querySelector('.music-toggle');
+    const musicPlayer = new MusicPlayer();
+    
+    // Manual event binding if automatic isn't working
+    musicToggle.addEventListener('click', () => {
+        musicPlayer.togglePlayer();
+    });
 });
 
 // ===== CHART FUNCTIONS ===== //
