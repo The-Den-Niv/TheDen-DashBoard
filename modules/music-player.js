@@ -210,6 +210,4 @@ class MusicPlayer {
     }
 }
 
-export default class MusicPlayer {
-   window.MusicPlayer = MusicPlayer;
-}
+window.MusicPlayer = MusicPlayer;
