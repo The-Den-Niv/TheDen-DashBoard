@@ -25,7 +25,7 @@ async function loadData() {
     updateUI();
   } catch (error) {
     console.error('Error loading data:', error);
-    alert('Failed to load data. Please check your data.json file.');
+    // Removed the alert popup here
   }
 }
 
@@ -53,7 +53,7 @@ function updateUI() {
     chart.update();
   }
 
-  // Update Crew Members - Fixed implementation
+  // Update Crew Members
   if (appData.crewMembers) {
     const membersContainer = document.querySelector('.crew-members-horizontal');
     membersContainer.innerHTML = '';
@@ -62,7 +62,6 @@ function updateUI() {
       const memberCard = document.createElement('div');
       memberCard.className = 'member-card';
       
-      // Ensure image path is correct
       let imagePath = member.image;
       if (!imagePath.startsWith('http') && !imagePath.startsWith('assets/')) {
         imagePath = 'assets/images/' + imagePath;
