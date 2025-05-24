@@ -5,8 +5,8 @@
     "xp": 1840000
   },
   "chartData": [
-    {"date": "2025-05-22", "amount": 0},
-    {"date": "2025-05-23", "amount": 1960000}
+    {"date": "22-05-2025", "amount": 0},
+    {"date": "23-05-2025", "amount": 1960000}
   ],
   "crewMembers": [
     {
