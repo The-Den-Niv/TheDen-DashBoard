@@ -1,7 +1,11 @@
 // ===== DATA MANAGEMENT ===== //
 let appData = {
-  crewData: {},
-  chartData: [],
+  crewStats: {  // Changed from crewData to crewStats for consistency
+    level: 0,
+    progress: 0,
+    xp: 0
+  },
+  balanceHistory: [],  // Changed from chartData to balanceHistory
   crewMembers: []
 };
 
@@ -10,22 +14,30 @@ async function loadData() {
   try {
     const response = await fetch('data.json');
     if (!response.ok) throw new Error('Failed to load data');
-    appData = await response.json();
+    const loadedData = await response.json();
+    
+    // Merge loaded data with defaults
+    appData = {
+      crewStats: {
+        level: loadedData.crewStats?.level || 0,
+        progress: loadedData.crewStats?.progress || 0,
+        xp: loadedData.crewStats?.xp || 0
+      },
+      balanceHistory: loadedData.balanceHistory || [],
+      crewMembers: loadedData.crewMembers || []
+    };
     
     // Ensure all crew members have required fields
-    if (appData.crewMembers) {
-      appData.crewMembers = appData.crewMembers.map(member => ({
-        name: member.name || 'Unknown',
-        level: member.level || 1,
-        rank: member.rank || 'Member',
-        image: member.image || 'assets/images/default.png'
-      }));
-    }
+    appData.crewMembers = appData.crewMembers.map(member => ({
+      name: member.name || 'Unknown',
+      level: member.level || 1,
+      rank: member.rank || 'Member',
+      image: member.image || 'assets/images/default.png'
+    }));
     
     updateUI();
   } catch (error) {
     console.error('Error loading data:', error);
-    // Removed the alert popup here
   }
 }
 
