@@ -41,14 +41,14 @@ class MusicPlayer {
             {
                 title: "Track 1",
                 artist: "Artist 1",
-                art: "assets/images/album-art1.jpg",
-                src: "assets/music/track1.mp3"
+                art: "Music/album-art1.jpg",
+                src: "Music/track1.mp3"
             },
             {
                 title: "Track 2", 
                 artist: "Artist 2",
-                art: "assets/images/album-art2.jpg",
-                src: "assets/music/track2.mp3"
+                art: "Music/album-art2.jpg",
+                src: "Music/track2.mp3"
             }
         ];
         this.loadTrack(0);
