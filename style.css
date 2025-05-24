@@ -57,6 +57,10 @@ header {
     cursor: pointer;
 }
 
+.crew-level { border: 1px solid red; }
+.progress-container { border: 1px solid green; }
+.progress-ring { border: 1px solid blue; }
+
 /* Main Content Layout */
 main {
     display: grid;
