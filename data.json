@@ -13,19 +13,19 @@
       "name": "Niiv_",
       "level": 82,
       "rank": "Captain",
-      "image": "/ProfliePics/Niiv_PFP.png"
+      "image": "ProfliePics/Niiv_PFP.png"
     },
     {
       "name": "ComedySama",
       "level": 1,
       "rank": "Member",
-      "image": "/ProfliePics/default.png"
+      "image": "ProfliePics/default.png"
     },
     {
       "name": "HunkyBlockGuy",
       "level": 1,
       "rank": "Member",
-      "image": "/ProfliePics/default.png"
+      "image": "ProfliePics/default.png"
     }
   ]
 }
