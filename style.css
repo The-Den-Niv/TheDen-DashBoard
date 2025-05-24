@@ -335,7 +335,7 @@ main {
 /* Music Toggle Button */
 .music-toggle {
     position: absolute;
-    right: 1.5rem; /* More spacing from edge */
+    right: 80px; /* Reduced from 1.5rem/20px to move left */
     top: 50%;
     transform: translateY(-50%);
     background: rgba(255, 255, 255, 0.15);
