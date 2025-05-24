@@ -193,7 +193,7 @@ class MusicPlayer {
     }
 
     initEvents() {
-        this.elements.playerBtn?.addEventListener('click', () => this.togglePlayer());
+        this.elements.playerBtn.addEventListener('click', () => this.togglePlayer());
         this.elements.playBtn?.addEventListener('click', () => this.togglePlay());
         this.elements.prevBtn?.addEventListener('click', () => this.prevTrack());
         this.elements.nextBtn?.addEventListener('click', () => this.nextTrack());
