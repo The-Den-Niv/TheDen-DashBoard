@@ -5,20 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Den - Crew Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/music-player.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="modules/music-player.css">
 </head>
 <body>
     <header>
         <div class="nav-btn" onclick="toggleNav()">☰</div>
         <h1 class="logo">The Den</h1>
-
-        <!-- Add this new music button -->
         <button class="music-toggle">
-          <img src="Music/music-note.svg" alt="Music Player" class="music-icon">
+            <img src="assets/images/music-note.svg" alt="Music Player" class="music-icon">
         </button>
-        <script src="modules/music-player.js" type="module"></script>
         
         <div class="nav-dropdown">
             <a href="#">Home</a>
@@ -47,33 +44,33 @@
         </div>
     </section>
 
-
-    <!-- Music Player Panel (add before closing </body>) -->
-<div class="music-player">
-  <div class="player-header">
-    <h3>Now Playing</h3>
-    <button class="close-player">&times;</button>
-  </div>
-  <div class="track-info">
-    <img src="Music/album-art-placeholder.jpg" class="album-art">
-    <h4 class="song-title">No song selected</h4>
-    <p class="artist">-</p>
-  </div>
-  <div class="progress-container">
-    <div class="progress-bar"></div>
-    <div class="time-display">
-      <span class="current-time">0:00</span>
-      <span class="duration">0:00</span>
+    <!-- Music Player Panel -->
+    <div class="music-player">
+        <div class="player-header">
+            <h3>Now Playing</h3>
+            <button class="close-player">&times;</button>
+        </div>
+        <div class="track-info">
+            <img src="assets/images/album-art-placeholder.jpg" class="album-art">
+            <h4 class="song-title">No song selected</h4>
+            <p class="artist">-</p>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+            <div class="time-display">
+                <span class="current-time">0:00</span>
+                <span class="duration">0:00</span>
+            </div>
+        </div>
+        <div class="controls">
+            <button class="control-btn repeat-btn" title="Repeat">↻</button>
+            <button class="control-btn prev-btn" title="Previous">⏮</button>
+            <button class="control-btn play-btn" title="Play">▶</button>
+            <button class="control-btn next-btn" title="Next">⏭</button>
+        </div>
     </div>
-  </div>
-  <div class="controls">
-    <button class="control-btn repeat-btn" title="Repeat">↻</button>
-    <button class="control-btn prev-btn" title="Previous">⏮</button>
-    <button class="control-btn play-btn" title="Play">▶</button>
-    <button class="control-btn next-btn" title="Next">⏭</button>
-    <button class="control-btn playlist-btn" title="Playlist">≡</button>
-  </div>
     
-    <script src="script.js"></script>
-</body>   
+    <script src="assets/js/music-player.js" type="module"></script>
+    <script src="assets/js/main.js"></script>
+</body>
 </html>
