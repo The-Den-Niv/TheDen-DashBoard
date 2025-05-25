@@ -1,17 +1,18 @@
 {
   "crewData": {
-    "level": 5,
-    "progress": 97.42,
-    "xp": 1840000
+    "level": 6,
+    "progress": 2.69,
+    "xp": 1870000
   },
   "chartData": [
     {"date": "22-05-2025", "amount": 0},
-    {"date": "23-05-2025", "amount": 1960000}
+    {"date": "23-05-2025", "amount": 1960000},
+    {"date": "25-05-2025", "amount": 2090000}
   ],
   "crewMembers": [
     {
       "name": "Niiv_",
-      "level": 82,
+      "level": 83,
       "rank": "Captain",
       "image": "ProfliePics/Niiv_PFP.png"
     },
